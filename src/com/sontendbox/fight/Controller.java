@@ -1,9 +1,23 @@
 package com.sontendbox.fight;
 
-import java.io.Console;
 import java.util.Scanner;
 
 public class Controller {
+    private static final String weaponSelectPrompt = "Select weapon. Current weapon availability is limited to: ";
+    private static final String selectAttack = "Select attack: ";
+    private static final String com1Chose = "Combatant 1 chose ";
+    private static final String com2Chose = "Combatant 2 chose ";
+    private static final String greet1 = "************************************************";
+    private static final String greet2 = "*                                              *";
+    private static final String greet3 = "* WELCOME T0 CONSOLE COMBAT! PREPARE TO FIGHT! *";
+    private static final String oneDigitRegex = "/d{1}";
+    private static final String bracketRegex = "[%s]";
+    private static final String numPlayersPrompt = "Enter number of players (0-2) players allowed: ";
+    private static final String twoPlayerAnnouncement = "Battle is between 2 human controlled fighters";
+    private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
+                                                       "1 computer controlled fighter";
+    private static final String zeroPlayerAnnouncement = "Battle is between 2 computer controlled fighters";
+
 
 
     private Fighter combatant1;
@@ -24,8 +38,8 @@ public class Controller {
             while (combatant1.getHealth() > 0 && combatant2.getHealth() > 0) {
                 takeTurn();
                 updateScreen();
-                //scanner.next();
-
+                scanner.next();
+                // TODO: clear screen?
             }
             playAgain = displayVictoryScreen();
         }
@@ -33,37 +47,20 @@ public class Controller {
 
     private boolean displayVictoryScreen() {
         // TODO: declare winner
-        String winner;
-        if(combatant1.getHealth() > 0){
-            winner = "combatant 1";
-        }
-        else{
-            winner = "combatant 2";
-        }
-
-
-        System.out.println("************************************************");
-        System.out.println("*                                              *");
-        System.out.println("*   Congratulations " + winner + "! You won!   *");
-        System.out.println("*                                              *");
-        System.out.println("************************************************");
-
 
         System.out.print("Play again? [y/n]");
         return ("y".equalsIgnoreCase(scanner.next()));
+
     }
 
     private void updateScreen() {
         // TODO: display turn results
-        System.out.println("Combatant 1 Health: " + combatant1.getHealth());
-        System.out.println("Combatant 2 Health: " + combatant2.getHealth());
     }
 
     private void takeTurn() {
         if (playerTurn == 1) {
             Attack[] attacks = combatant1.getAttacks();
             if (isC1Human) {
-                System.out.println("Combatant 1 turn");
                 movePrompt(combatant1, combatant2, attacks);
             } else {
                 int attackIndex = (int) (Math.random() * attacks.length);
@@ -73,7 +70,6 @@ public class Controller {
         } else {
             Attack[] attacks = combatant2.getAttacks();
             if (isC2Human) {
-                System.out.println("Combatant 2 turn");
                 movePrompt(combatant2, combatant1, attacks);
             } else {
                 int attackIndex = (int) (Math.random() * attacks.length);
@@ -90,17 +86,14 @@ public class Controller {
             stringBuilder.append(String.format(bracketRegex, i + 1));
             stringBuilder.append(attacks[i].name().toLowerCase());
         }
-        boolean isValid = true;
-        while (isValid) {
+        boolean isValid = false;
+        while (!isValid) {
             System.out.print(stringBuilder);
             String attackInput = scanner.next();
-
-            if (attackInput.matches("\\d{1}") && Integer.parseInt(attackInput) <= attacks.length) {
-
-            
-
+            if (attackInput.matches(oneDigitRegex) && Integer.parseInt(attackInput) <= attacks.length) {
                 attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target);
-                isValid = false;
+                isValid = true;
+            }
         }
     }
 
