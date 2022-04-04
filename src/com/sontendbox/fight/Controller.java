@@ -38,8 +38,8 @@ public class Controller {
             while (combatant1.getHealth() > 0 && combatant2.getHealth() > 0) {
                 takeTurn();
                 updateScreen();
-                scanner.next();
-                // TODO: clear screen?
+                //scanner.next();
+
             }
             playAgain = displayVictoryScreen();
         }
@@ -47,20 +47,37 @@ public class Controller {
 
     private boolean displayVictoryScreen() {
         // TODO: declare winner
+        String winner;
+        if(combatant1.getHealth() > 0){
+            winner = "combatant 1";
+        }
+        else{
+            winner = "combatant 2";
+        }
+
+
+        System.out.println("************************************************");
+        System.out.println("*                                              *");
+        System.out.println("*   Congratulations " + winner + "! You won!   *");
+        System.out.println("*                                              *");
+        System.out.println("************************************************");
+
 
         System.out.print("Play again? [y/n]");
         return ("y".equalsIgnoreCase(scanner.next()));
-
     }
 
     private void updateScreen() {
         // TODO: display turn results
+        System.out.println("Combatant 1 Health: " + combatant1.getHealth());
+        System.out.println("Combatant 2 Health: " + combatant2.getHealth());
     }
 
     private void takeTurn() {
         if (playerTurn == 1) {
             Attack[] attacks = combatant1.getAttacks();
             if (isC1Human) {
+                System.out.println("Combatant 1 turn");
                 movePrompt(combatant1, combatant2, attacks);
             } else {
                 int attackIndex = (int) (Math.random() * attacks.length);
@@ -70,6 +87,7 @@ public class Controller {
         } else {
             Attack[] attacks = combatant2.getAttacks();
             if (isC2Human) {
+                System.out.println("Combatant 2 turn");
                 movePrompt(combatant2, combatant1, attacks);
             } else {
                 int attackIndex = (int) (Math.random() * attacks.length);
@@ -86,13 +104,14 @@ public class Controller {
             stringBuilder.append(String.format(bracketRegex, i + 1));
             stringBuilder.append(attacks[i].name().toLowerCase());
         }
-        boolean isValid = false;
-        while (!isValid) {
+        boolean isValid = true;
+        while (isValid) {
             System.out.print(stringBuilder);
             String attackInput = scanner.next();
-            if (attackInput.matches(oneDigitRegex) && Integer.parseInt(attackInput) <= attacks.length) {
+
+            if (attackInput.matches("\\d{1}") && Integer.parseInt(attackInput) <= attacks.length) {
                 attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target);
-                isValid = true;
+                isValid = false;
             }
         }
     }
