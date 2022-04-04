@@ -29,6 +29,7 @@ class Fighter {
         }
         return toReturn;
     }
+
     int getDamage(Attack attack) {
         return weapon.damageCalculation(attack);
     }
