@@ -58,7 +58,7 @@ public class Controller {
 
         System.out.println("************************************************");
         System.out.println("*                                              *");
-        System.out.println("*   Congratulations " + winner + "! You won!   *");
+        System.out.println("*    Congratulations " + winner + "! You won!    *");
         System.out.println("*                                              *");
         System.out.println("************************************************");
 
@@ -81,7 +81,7 @@ public class Controller {
                 movePrompt(combatant1, combatant2, attacks);
             } else {
                 int attackIndex = (int) (Math.random() * attacks.length);
-                combatant1.attack(attacks[attackIndex], combatant2);
+                System.out.println("Combatant 1 " + combatant1.attack(attacks[attackIndex], combatant2));
             }
             playerTurn = 2;
         } else {
@@ -91,7 +91,7 @@ public class Controller {
                 movePrompt(combatant2, combatant1, attacks);
             } else {
                 int attackIndex = (int) (Math.random() * attacks.length);
-                combatant2.attack(attacks[attackIndex], combatant1);
+                System.out.println("Combatant 1 " + combatant2.attack(attacks[attackIndex], combatant1));
             }
             playerTurn = 1;
         }
@@ -110,7 +110,7 @@ public class Controller {
             String attackInput = scanner.next();
 
             if (attackInput.matches("\\d{1}") && Integer.parseInt(attackInput) <= attacks.length) {
-                attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target);
+                System.out.println("Combatant " + attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target));
                 isValid = false;
             }
         }
