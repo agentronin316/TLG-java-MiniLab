@@ -1,5 +1,6 @@
 package com.sontendbox.fight;
 
+import java.io.Console;
 import java.util.Scanner;
 
 public class Controller {
@@ -41,6 +42,7 @@ public class Controller {
 
             }
             playAgain = displayVictoryScreen();
+
         }
     }
 
@@ -147,7 +149,7 @@ public class Controller {
         boolean isInvalid = true;
         while (isInvalid) {
             System.out.print(numPlayersPrompt);
-            int numPlayers = Integer.parseInt(scanner.nextLine());
+            int numPlayers = Integer.parseInt(scanner.next());
             if (numPlayers >= 0 && numPlayers <= 2) {
                 isInvalid = false;
                 switch (numPlayers) {
