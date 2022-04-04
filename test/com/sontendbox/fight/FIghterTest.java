@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class FIghterTest {
     private static String missMessage = "misses.";
-    private static String punchMessage = "Dave punches for 10 damage!";
+    private static String punchMessage = "Dave punches Steve for 10 damage!";
 
     Fighter fighter1;
     Fighter fighter2;

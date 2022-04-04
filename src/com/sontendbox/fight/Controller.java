@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class Controller {
     private static final String weaponSelectPrompt = "Select weapon. Current weapon availability is limited to: ";
     private static final String selectAttack = "Select attack: ";
-    private static final String com1Chose = "Combatant 1 chose ";
-    private static final String com2Chose = "Combatant 2 chose ";
+    private static final String CHOSE = " chose ";
     private static final String greet1 = "************************************************";
     private static final String greet2 = "*                                              *";
     private static final String greet3 = "* WELCOME T0 CONSOLE COMBAT! PREPARE TO FIGHT! *";
@@ -25,13 +24,13 @@ public class Controller {
     private boolean isC1Human;
     private boolean isC2Human;
     private Scanner scanner = new Scanner(System.in);
-    private Weapon weapon;
-    private int numPlayers = 0;
+    private int firstPlayer;
     private int playerTurn = 1;
 
     public void execute() {
         boolean playAgain = true;
         while (playAgain) {
+            firstPlayer = (int)(Math.random() * 2 + 1);
             greet();
             numPlayersPrompt();
             weaponSelection();
@@ -49,10 +48,10 @@ public class Controller {
         // TODO: declare winner
         String winner;
         if(combatant1.getHealth() > 0){
-            winner = "combatant 1";
+            winner = combatant1.getName();
         }
         else{
-            winner = "combatant 2";
+            winner = combatant2.getName();
         }
 
 
@@ -69,12 +68,12 @@ public class Controller {
 
     private void updateScreen() {
         // TODO: display turn results
-        System.out.println("Combatant 1 Health: " + combatant1.getHealth());
-        System.out.println("Combatant 2 Health: " + combatant2.getHealth());
+        System.out.println(combatant1.getName() + " Health: " + combatant1.getHealth());
+        System.out.println(combatant2.getName() + " Health: " + combatant2.getHealth());
     }
 
     private void takeTurn() {
-        if (playerTurn == 1) {
+        if (playerTurn == firstPlayer) {
             Attack[] attacks = combatant1.getAttacks();
             if (isC1Human) {
                 System.out.println(combatant1.getName() + " turn");
@@ -83,7 +82,6 @@ public class Controller {
                 int attackIndex = (int) (Math.random() * attacks.length);
                 System.out.println(combatant1.attack(attacks[attackIndex], combatant2));
             }
-            playerTurn = 2;
         } else {
             Attack[] attacks = combatant2.getAttacks();
             if (isC2Human) {
@@ -93,8 +91,8 @@ public class Controller {
                 int attackIndex = (int) (Math.random() * attacks.length);
                 System.out.println(combatant2.attack(attacks[attackIndex], combatant1));
             }
-            playerTurn = 1;
         }
+        playerTurn = (playerTurn % 2) + 1;
     }
 
     private void movePrompt(Fighter attacker, Fighter target, Attack[] attacks) {
@@ -110,7 +108,7 @@ public class Controller {
             String attackInput = scanner.next();
 
             if (attackInput.matches("\\d{1}") && Integer.parseInt(attackInput) <= attacks.length) {
-                System.out.println("Combatant " + attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target));
+                System.out.println(attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target));
                 isValid = false;
             }
         }
@@ -118,9 +116,9 @@ public class Controller {
 
     private void weaponSelection() {
         combatant1 = getCombatant();
-        System.out.println(com1Chose + combatant1.getWeaponName());
+        System.out.println(combatant1.getName() + CHOSE + combatant1.getWeaponName());
         combatant2 = getCombatant();
-        System.out.println(com2Chose + combatant2.getWeaponName());
+        System.out.println(combatant2.getName() + CHOSE + combatant2.getWeaponName());
     }
 
     private Fighter getCombatant() {
@@ -149,7 +147,7 @@ public class Controller {
         boolean isInvalid = true;
         while (isInvalid) {
             System.out.print(numPlayersPrompt);
-            this.numPlayers = Integer.parseInt(scanner.nextLine());
+            int numPlayers = Integer.parseInt(scanner.nextLine());
             if (numPlayers >= 0 && numPlayers <= 2) {
                 isInvalid = false;
                 switch (numPlayers) {
