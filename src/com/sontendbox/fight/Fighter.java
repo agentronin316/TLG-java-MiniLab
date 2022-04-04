@@ -3,8 +3,8 @@ package com.sontendbox.fight;
 import java.util.Arrays;
 
 class Fighter {
-    private static final String missMessage = "misses.";
-    private static final String hitFormat = "%s %s for %s damage!";
+    private static final String missMessage = " misses.";
+    private static final String hitFormat = "%s %s %s for %s damage!";
     private static final String exceptionMessageFormat = "weapon %s does not have attack: %s";
 
     private Weapon weapon;
@@ -29,9 +29,9 @@ class Fighter {
         if (hit < attack.getAccuracy()){
             int damage = weapon.damageCalculation(attack);
             opponent.takeDamage(damage);
-            toReturn = String.format(hitFormat, getName(), weapon.getVerb(), damage);
+            toReturn = String.format(hitFormat, getName(), weapon.getVerb(), opponent.getName(), damage);
         } else {
-            toReturn = missMessage;
+            toReturn = name + missMessage;
         }
         return toReturn;
     }
