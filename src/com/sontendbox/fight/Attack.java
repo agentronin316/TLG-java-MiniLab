@@ -1,7 +1,8 @@
 package com.sontendbox.fight;
 
 enum Attack {
-    BALANCED(70, 3);
+    BALANCED(70, 3),
+    ACCURATE(90, 0);
 
     private int accuracy;
     private int damageMod;

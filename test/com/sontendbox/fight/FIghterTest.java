@@ -1,12 +1,12 @@
 package com.sontendbox.fight;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Objects;
-
 public class FIghterTest {
+    private static String missMessage = "misses.";
+    private static String punchMessage = "punches for 10 damage!";
 
     Fighter fighter1;
     Fighter fighter2;
@@ -20,9 +20,15 @@ public class FIghterTest {
     @Test
     public void attack_functionsProperly_whenGivenAValidAttack() throws Exception {
         String result = fighter1.attack(Attack.BALANCED, fighter2);
-        while (result.equals("misses.")) {
+        while (result.equals(missMessage)) {
             result = fighter1.attack(Attack.BALANCED, fighter2);
         }
-        Assert.assertEquals(90, fighter2.getHealth());
+        assertEquals(punchMessage, result);
+        assertEquals(90, fighter2.getHealth());
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void attack_throwsIllegalArgumentException_whenGivenAnInvalidAttack() throws Exception {
+        String result = fighter1.attack(Attack.ACCURATE, fighter2);
     }
 }
