@@ -34,6 +34,10 @@ class Fighter {
         return toReturn;
     }
 
+    String getWeapon(){
+        return weapon.getPrintName();
+    }
+
     int getDamage(Attack attack) {
         return weapon.damageCalculation(attack);
     }
