@@ -34,7 +34,7 @@ class Fighter {
         return toReturn;
     }
 
-    String getWeapon(){
+    String getWeaponName(){
         return weapon.getPrintName();
     }
 
