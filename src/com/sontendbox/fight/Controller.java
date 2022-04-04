@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Controller {
 
+
     private Fighter combatant1;
     private Fighter combatant2;
     private boolean isC1Human;
@@ -84,32 +85,35 @@ public class Controller {
 
     private void movePrompt(Fighter attacker, Fighter target, Attack[] attacks) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Select attack: ");
+        stringBuilder.append(selectAttack);
         for (int i = 0; i < attacks.length; i++) {
-            stringBuilder.append("[" + (i + 1) + "]");
+            stringBuilder.append(String.format(bracketRegex, i + 1));
             stringBuilder.append(attacks[i].name().toLowerCase());
         }
         boolean isValid = true;
         while (isValid) {
             System.out.print(stringBuilder);
             String attackInput = scanner.next();
+
             if (attackInput.matches("\\d{1}") && Integer.parseInt(attackInput) <= attacks.length) {
+
+            
+
                 attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target);
                 isValid = false;
-            }
         }
     }
 
     private void weaponSelection() {
         combatant1 = getCombatant();
-        System.out.println("Combatant 1 chose " + combatant1.getWeaponName());
+        System.out.println(com1Chose + combatant1.getWeaponName());
         combatant2 = getCombatant();
-        System.out.println("Combatant 2 chose " + combatant2.getWeaponName());
+        System.out.println(com2Chose + combatant2.getWeaponName());
     }
 
     private Fighter getCombatant() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Select weapon. Current weapon availability is limited to: ");
+        builder.append(weaponSelectPrompt);
         Weapon[] weapons = Weapon.values();
         for (int i = 0; i < weapons.length - 1; i++) {
             builder.append(weapons[i].getPrintName());
@@ -130,23 +134,23 @@ public class Controller {
     private void numPlayersPrompt() {
         boolean isInvalid = true;
         while (isInvalid) {
-            System.out.print("Enter number of players (0-2) players allowed: ");
+            System.out.print(numPlayersPrompt);
             this.numPlayers = Integer.parseInt(scanner.nextLine());
             if (numPlayers >= 0 && numPlayers <= 2) {
                 isInvalid = false;
                 switch (numPlayers) {
                     case 0:
-                        System.out.println("Battle is between 2 computer controlled fighters");
+                        System.out.println(zeroPlayerAnnouncement);
                         isC1Human = false;
                         isC2Human = false;
                         break;
                     case 1:
-                        System.out.println("Battle is between 1 human controlled fighter and 1 computer controlled fighter ");
+                        System.out.println(onePlayerAnnouncement);
                         isC1Human = true;
                         isC2Human = false;
                         break;
                     case 2:
-                        System.out.println("Battle is between 2 human controlled fighters");
+                        System.out.println(twoPlayerAnnouncement);
                         isC1Human = true;
                         isC2Human = true;
                         break;
@@ -156,10 +160,10 @@ public class Controller {
     }
 
     private void greet() {
-        System.out.println("************************************************");
-        System.out.println("*                                              *");
-        System.out.println("* WELCOME T0 CONSOLE COMBAT! PREPARE TO FIGHT! *");
-        System.out.println("*                                              *");
-        System.out.println("************************************************");
+        System.out.println(greet1);
+        System.out.println(greet2);
+        System.out.println(greet3);
+        System.out.println(greet2);
+        System.out.println(greet1);
     }
 }
