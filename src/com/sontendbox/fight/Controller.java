@@ -17,7 +17,7 @@ public class Controller {
     private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
                                                        "1 computer controlled fighter";
     private static final String zeroPlayerAnnouncement = "Battle is between 2 computer controlled fighters";
-
+    private static final String namePrompt = "Enter a name for this combatant: ";
 
 
     private Fighter combatant1;
@@ -77,21 +77,21 @@ public class Controller {
         if (playerTurn == 1) {
             Attack[] attacks = combatant1.getAttacks();
             if (isC1Human) {
-                System.out.println("Combatant 1 turn");
+                System.out.println(combatant1.getName() + " turn");
                 movePrompt(combatant1, combatant2, attacks);
             } else {
                 int attackIndex = (int) (Math.random() * attacks.length);
-                System.out.println("Combatant 1 " + combatant1.attack(attacks[attackIndex], combatant2));
+                System.out.println(combatant1.attack(attacks[attackIndex], combatant2));
             }
             playerTurn = 2;
         } else {
             Attack[] attacks = combatant2.getAttacks();
             if (isC2Human) {
-                System.out.println("Combatant 2 turn");
+                System.out.println(combatant2.getName() + " turn");
                 movePrompt(combatant2, combatant1, attacks);
             } else {
                 int attackIndex = (int) (Math.random() * attacks.length);
-                System.out.println("Combatant 1 " + combatant2.attack(attacks[attackIndex], combatant1));
+                System.out.println(combatant2.attack(attacks[attackIndex], combatant1));
             }
             playerTurn = 1;
         }
@@ -137,7 +137,9 @@ public class Controller {
             String input = scanner.next();
             for (Weapon weapon : Weapon.values()) {
                 if (input.equalsIgnoreCase(weapon.getPrintName())) {
-                    return new Fighter(weapon);
+                    System.out.print(namePrompt);
+                    String name = scanner.next();
+                    return new Fighter(weapon, name);
                 }
             }
         }

@@ -6,15 +6,15 @@ import org.junit.Test;
 
 public class FIghterTest {
     private static String missMessage = "misses.";
-    private static String punchMessage = "punches for 10 damage!";
+    private static String punchMessage = "Dave punches for 10 damage!";
 
     Fighter fighter1;
     Fighter fighter2;
 
     @Before
     public void setUp() {
-        fighter1 = new Fighter(Weapon.FIST);
-        fighter2 = new Fighter(Weapon.FIST);
+        fighter1 = new Fighter(Weapon.FIST, "Dave");
+        fighter2 = new Fighter(Weapon.FIST, "Steve");
     }
 
     @Test

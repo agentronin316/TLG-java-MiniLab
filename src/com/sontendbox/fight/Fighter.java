@@ -4,14 +4,16 @@ import java.util.Arrays;
 
 class Fighter {
     private static final String missMessage = "misses.";
-    private static final String hitFormat = "%s for %s damage!";
+    private static final String hitFormat = "%s %s for %s damage!";
     private static final String exceptionMessageFormat = "weapon %s does not have attack: %s";
 
     private Weapon weapon;
     private int health = 100;
+    private String name;
 
-    Fighter(Weapon weapon) {
+    Fighter(Weapon weapon, String name) {
         this.weapon = weapon;
+        this.name = name;
     }
 
     Attack[] getAttacks() {
@@ -27,11 +29,15 @@ class Fighter {
         if (hit < attack.getAccuracy()){
             int damage = weapon.damageCalculation(attack);
             opponent.takeDamage(damage);
-            toReturn = String.format(hitFormat, weapon.getVerb(), damage);
+            toReturn = String.format(hitFormat, getName(), weapon.getVerb(), damage);
         } else {
             toReturn = missMessage;
         }
         return toReturn;
+    }
+
+    String getName() {
+        return name;
     }
 
     String getWeaponName(){
