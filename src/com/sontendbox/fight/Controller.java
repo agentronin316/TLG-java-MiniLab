@@ -10,6 +10,7 @@ public class Controller {
     private Scanner scanner = new Scanner(System.in);
     private Weapon weapon;
     private int numPlayers = 0;
+    private int playerTurn = 1;
 
     public void execute() {
         greet();
@@ -24,27 +25,40 @@ public class Controller {
     }
 
     private void movePrompt() {
+        System.out.println("Select attack: " + Arrays.toString(combantant1.getAttacks()));
+        boolean isValid = true;
+        while (isValid) {
+            if(playerTurn == 1) {
+                System.out.println("Select attack: " + Arrays.toString(combantant1.getAttacks()));
+                String attackInput = scanner.next();
+                combantant1.attack(attackInput, combantant2);
+
+            }
+
+        }
     }
 
     private void weaponSelection() {
         int i = 1;
-        while(i <= 2) {
-            System.out.print("Select weapon. Current weapon availability is limited to "
+        while (i <= 2) {
+            System.out.print("Select weapon. Current weapon availability is limited to: "
                     + Weapon.FIST.getPrintName());
             String input = scanner.next();
             for (Weapon weapon : Weapon.values()) {
                 if (input.equalsIgnoreCase(weapon.getPrintName()))
                     this.weapon = weapon;
-                System.out.println("Weapon chosen: " + weapon.getPrintName());
             }
-            switch (i){
+            switch (i) {
                 case 1:
                     combantant1 = new Fighter(weapon);
                     i++;
+                    System.out.println("Combatant " + i + " chose " + combantant1.getWeapon());
                     break;
                 case 2:
                     combantant2 = new Fighter(weapon);
-                    i++; break;
+                    System.out.println("Combatant " + i + " chose " + combantant2.getWeapon());
+                    i++;
+                    break;
             }
         }
     }
@@ -54,7 +68,7 @@ public class Controller {
         while (isValid) {
             System.out.print("Enter number of players (0-2) players allowed: ");
             this.numPlayers = Integer.parseInt(scanner.nextLine());
-            if(numPlayers >= 0 && numPlayers <=2) {
+            if (numPlayers >= 0 && numPlayers <= 2) {
 
                 switch (numPlayers) {
                     case 0:
