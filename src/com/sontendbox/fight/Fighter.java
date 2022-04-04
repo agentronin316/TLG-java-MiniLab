@@ -42,8 +42,7 @@ class Fighter {
         return health;
     }
 
-    private boolean takeDamage(int damage) {
+    private void takeDamage(int damage) {
         health -= damage;
-        return (health < 1);
     }
 }
