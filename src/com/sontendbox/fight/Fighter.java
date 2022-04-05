@@ -27,7 +27,7 @@ class Fighter {
         }
         int hit = (int)(Math.random() * 100);
         if (hit < attack.getAccuracy()){
-            int damage = weapon.damageCalculation(attack);
+            int damage = getDamage(attack);
             opponent.takeDamage(damage);
             toReturn = String.format(hitFormat, getName(), weapon.getVerb(), opponent.getName(), damage);
         } else {
