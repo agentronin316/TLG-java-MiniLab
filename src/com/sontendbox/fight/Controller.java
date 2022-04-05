@@ -54,12 +54,16 @@ public class Controller {
             winner = combatant2.getName();
         }
         victoryBanner();
-        System.out.println("**********************************************************");
-        System.out.println("    Congratulations " + winner + "! You won!");
-        System.out.println("**********************************************************");
-
-
-
+        if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0) {
+            System.out.println("**********************************************************");
+            System.out.println("    Congratulations " + winner + "! You won!");
+            System.out.println("**********************************************************");
+        }
+        if (combatant1.getHealth() < 0 || combatant2.getHealth() < 0) {
+            System.out.println("*******************************************************************************");
+            System.out.println("    Congratulations " + winner + "! You decimated your opponent!");
+            System.out.println("*******************************************************************************");
+        }
 
         System.out.print("Enter 'y' to play again or enter any key to exit: ");
         return ("y".equalsIgnoreCase(scanner.next()));
@@ -106,7 +110,7 @@ public class Controller {
             System.out.print(stringBuilder);
             String attackInput = scanner.next();
 
-            if (attackInput.matches("\\d{1}") && Integer.parseInt(attackInput) <= attacks.length) {
+            if (attackInput.matches(oneDigitRegex) && Integer.parseInt(attackInput) <= attacks.length) {
                 System.out.println(attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target));
                 isValid = false;
             }
@@ -174,12 +178,12 @@ public class Controller {
     }
 
     private void greet() throws IOException {
-        Files.lines(Path.of("resources/greeting.txt"))
+        Files.lines(Path.of(GREET_FILE_PATH))
                 .forEach(System.out::println);
     }
 
     private void victoryBanner() throws IOException {
-        Files.lines(Path.of("resources/victory.txt"))
+        Files.lines(Path.of(VICTORY_FILE_PATH))
                 .forEach(System.out::println);
     }
 }
