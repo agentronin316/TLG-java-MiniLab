@@ -1,6 +1,5 @@
-package com.sontendbox.fight;
+package com.sontendbox.konsole_combat;
 
-import java.io.Console;
 import java.util.Scanner;
 
 public class Controller {
