@@ -1,13 +1,9 @@
-package com.sontendbox.konsole_combat;
+package com.sontendbox.fight;
 
 import java.util.Arrays;
 
 enum Weapon {
-    FIST("punches", 7, "fist", Attack.BALANCED),
-    BOW("shoots", 7, "bow", Attack.BALANCED, Attack.ACCURATE),
-    SWORD("slashes", 7, "sword", Attack.ACCURATE, Attack.BALANCED, Attack.HEAVY),
-    MACE("bashes", 7, "mace", Attack.BALANCED, Attack.HEAVY),
-    WARHAMMER("crushes", 7, "warhammer", Attack.HEAVY);
+    FIST("punches", 7, "fist", Attack.BALANCED);
 
     private final String verb;
     private final int baseDamage;
