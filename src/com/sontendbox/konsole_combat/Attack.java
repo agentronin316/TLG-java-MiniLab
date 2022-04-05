@@ -1,4 +1,4 @@
-package com.sontendbox.fight;
+package com.sontendbox.konsole_combat;
 
 enum Attack {
     BALANCED(70, 3),
