@@ -1,6 +1,7 @@
 package com.sontendbox.fight;
 
-import java.io.Console;
+import com.apps.util.Console;
+
 import java.util.Scanner;
 
 public class Controller {
@@ -15,7 +16,7 @@ public class Controller {
     private static final String numPlayersPrompt = "Enter number of players (0-2) players allowed: ";
     private static final String twoPlayerAnnouncement = "Battle is between 2 human controlled fighters";
     private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
-                                                       "1 computer controlled fighter";
+            "1 computer controlled fighter";
     private static final String zeroPlayerAnnouncement = "Battle is between 2 computer controlled fighters";
     private static final String namePrompt = "Enter a name for this combatant: ";
 
@@ -31,15 +32,13 @@ public class Controller {
     public void execute() {
         boolean playAgain = true;
         while (playAgain) {
-            firstPlayer = (int)(Math.random() * 2 + 1);
+            firstPlayer = (int) (Math.random() * 2 + 1);
             greet();
             numPlayersPrompt();
             weaponSelection();
             while (combatant1.getHealth() > 0 && combatant2.getHealth() > 0) {
                 takeTurn();
                 updateScreen();
-                //scanner.next();
-
             }
             playAgain = displayVictoryScreen();
 
@@ -49,17 +48,16 @@ public class Controller {
     private boolean displayVictoryScreen() {
         // TODO: declare winner
         String winner;
-        if(combatant1.getHealth() > 0){
+        if (combatant1.getHealth() > 0) {
             winner = combatant1.getName();
-        }
-        else{
+        } else {
             winner = combatant2.getName();
         }
 
 
         System.out.println("************************************************");
         System.out.println("*                                              *");
-        System.out.println("*    Congratulations " + winner + "! You won!    *");
+        System.out.println("*    Congratulations " + winner + "! You won!            *");
         System.out.println("*                                              *");
         System.out.println("************************************************");
 
@@ -70,8 +68,13 @@ public class Controller {
 
     private void updateScreen() {
         // TODO: display turn results
+        clearConsole();
         System.out.println(combatant1.getName() + " Health: " + combatant1.getHealth());
         System.out.println(combatant2.getName() + " Health: " + combatant2.getHealth());
+    }
+
+    private void clearConsole() {
+        Console.clear();
     }
 
     private void takeTurn() {
@@ -133,7 +136,7 @@ public class Controller {
         }
         builder.append(weapons[weapons.length - 1].getPrintName());
         System.out.print(builder);
-        while(true) {
+        while (true) {
             String input = scanner.next();
             for (Weapon weapon : Weapon.values()) {
                 if (input.equalsIgnoreCase(weapon.getPrintName())) {
