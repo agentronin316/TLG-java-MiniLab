@@ -68,14 +68,11 @@ public class Controller {
 
     private void updateScreen() {
         // TODO: display turn results
-        clearConsole();
+        Console.clear();
         System.out.println(combatant1.getName() + " Health: " + combatant1.getHealth());
         System.out.println(combatant2.getName() + " Health: " + combatant2.getHealth());
     }
 
-    private void clearConsole() {
-        Console.clear();
-    }
 
     private void takeTurn() {
         if (playerTurn == firstPlayer) {
