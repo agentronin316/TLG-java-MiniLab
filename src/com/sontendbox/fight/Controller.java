@@ -2,10 +2,11 @@ package com.sontendbox.fight;
 
 import com.apps.util.Console;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Controller {
-    private static final String weaponSelectPrompt = "Select weapon. Current weapon availability is limited to: ";
+    private static final String weaponSelectPrompt = "Select weapon. Weapons available are: ";
     private static final String selectAttack = "Select attack: ";
     private static final String CHOSE = " chose ";
     private static final String greet1 = "************************************************";
@@ -128,10 +129,11 @@ public class Controller {
         builder.append(weaponSelectPrompt);
         Weapon[] weapons = Weapon.values();
         for (int i = 0; i < weapons.length - 1; i++) {
-            builder.append(weapons[i].getPrintName());
+            builder.append(weapons[i].getPrintName() + weapons[i].getAttacks());
             builder.append(", ");
         }
         builder.append(weapons[weapons.length - 1].getPrintName());
+        builder.append(Arrays.toString(weapons[weapons.length - 1].getAttacks()));
         System.out.print(builder);
         while (true) {
             String input = scanner.next();
