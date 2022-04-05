@@ -7,7 +7,7 @@ rem   In this example, any third-party library JARs are located in 'lib' and add
 rem   Remove this -classpath "lib\*" if you're not using any, which results in the following:
 rem   javac -d classes src\com\games\blackjack\client\*.java src\com\games\blackjack\controller\*.java src\com\games\blackjack\domain\*.java
 
-javac -d classes -classpath "lib\app-utils-1.1.jar" src\com\sotendbox\konsole_combat\fight\*.java src\com\sotendbox\client\*.java
+javac -d classes -classpath "lib\app-utils-1.1.jar" src\com\sontendbox\konsole_combat\fight\*.java src\com\sontendbox\client\*.java
 
 
 rem   Build the application JAR.
