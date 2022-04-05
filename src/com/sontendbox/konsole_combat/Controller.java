@@ -152,7 +152,7 @@ public class Controller {
                     System.out.println(selectCharacter);
                     for (Character character : characters) {
                         System.out.printf("%s, Damage mod: %s, Accuracy mod: %s\n",
-                                character.getPrintName(), character.getDamageMod(), character.getAccuracyMod());
+                                character.getPrintName(), character.getDamageMod(), character.getAccuracyMod() +"%");
                     }
                     String charSelection = scanner.next();
                     for(Character character : Character.values()) {
