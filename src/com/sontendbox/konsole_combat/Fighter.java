@@ -10,10 +10,17 @@ class Fighter {
     private Weapon weapon;
     private int health = 100;
     private String name;
+    private Character character = Character.DEFAULT;
 
     Fighter(Weapon weapon, String name) {
         this.weapon = weapon;
         this.name = name;
+    }
+
+    Fighter(Weapon weapon, String name, Character character) {
+        this.character = character;
+        this.name = name;
+        this.weapon = weapon;
     }
 
     Attack[] getAttacks() {
@@ -26,8 +33,8 @@ class Fighter {
             throw new IllegalArgumentException(String.format(exceptionMessageFormat, weapon.name(), attack.name()));
         }
         int hit = (int)(Math.random() * 100);
-        if (hit < attack.getAccuracy()){
-            int damage = weapon.damageCalculation(attack);
+        if (hit < getAccuracy(attack)){
+            int damage = getDamage(attack);
             opponent.takeDamage(damage);
             toReturn = String.format(hitFormat, getName(), weapon.getVerb(), opponent.getName(), damage);
         } else {
@@ -44,8 +51,12 @@ class Fighter {
         return weapon.getPrintName();
     }
 
+    int getAccuracy(Attack attack) {
+        return character.getAccuracyMod() + attack.getAccuracy();
+    }
+
     int getDamage(Attack attack) {
-        return weapon.damageCalculation(attack);
+        return character.getDamageMod() + weapon.damageCalculation(attack);
     }
 
     int getHealth(){
