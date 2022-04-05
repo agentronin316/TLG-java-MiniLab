@@ -1,4 +1,4 @@
-package com.sontendbox.fight;
+package com.sontendbox.konsole_combat;
 
 import java.util.Arrays;
 
@@ -26,8 +26,8 @@ class Fighter {
             throw new IllegalArgumentException(String.format(exceptionMessageFormat, weapon.name(), attack.name()));
         }
         int hit = (int)(Math.random() * 100);
-        if (hit < attack.getAccuracy()){
-            int damage = weapon.damageCalculation(attack);
+        if (hit < getAccuracy(attack)){
+            int damage = getDamage(attack);
             opponent.takeDamage(damage);
             toReturn = String.format(hitFormat, getName(), weapon.getVerb(), opponent.getName(), damage);
         } else {
@@ -42,6 +42,11 @@ class Fighter {
 
     String getWeaponName(){
         return weapon.getPrintName();
+    }
+
+    int getAccuracy(Attack attack) {
+        int accuracy = attack.getAccuracy();
+        return accuracy;
     }
 
     int getDamage(Attack attack) {

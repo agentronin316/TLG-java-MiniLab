@@ -1,21 +1,23 @@
-package com.sontendbox.fight;
+package com.sontendbox.konsole_combat;
 
-import java.io.Console;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Controller {
-    private static final String weaponSelectPrompt = "Select weapon. Current weapon availability is limited to: ";
+    private static final String weaponSelectPrompt = "Select weapon. Weapons available are: \n";
     private static final String selectAttack = "Select attack: ";
     private static final String CHOSE = " chose ";
-    private static final String greet1 = "************************************************";
-    private static final String greet2 = "*                                              *";
-    private static final String greet3 = "* WELCOME T0 CONSOLE COMBAT! PREPARE TO FIGHT! *";
-    private static final String oneDigitRegex = "/d{1}";
+    private static final String GREET_FILE_PATH = "resources/greeting.txt";
+    private static final String VICTORY_FILE_PATH = "resources/victory.txt";
+    private static final String oneDigitRegex = "\\d{1}";
     private static final String bracketRegex = "[%s]";
     private static final String numPlayersPrompt = "Enter number of players (0-2) players allowed: ";
     private static final String twoPlayerAnnouncement = "Battle is between 2 human controlled fighters";
     private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
-                                                       "1 computer controlled fighter";
+            "1 computer controlled fighter";
     private static final String zeroPlayerAnnouncement = "Battle is between 2 computer controlled fighters";
     private static final String namePrompt = "Enter a name for this combatant: ";
 
@@ -28,51 +30,50 @@ public class Controller {
     private int firstPlayer;
     private int playerTurn = 1;
 
-    public void execute() {
+    public void execute() throws IOException {
         boolean playAgain = true;
         while (playAgain) {
-            firstPlayer = (int)(Math.random() * 2 + 1);
+            firstPlayer = (int) (Math.random() * 2 + 1);
             greet();
             numPlayersPrompt();
             weaponSelection();
             while (combatant1.getHealth() > 0 && combatant2.getHealth() > 0) {
                 takeTurn();
                 updateScreen();
-                //scanner.next();
-
             }
             playAgain = displayVictoryScreen();
 
         }
     }
 
-    private boolean displayVictoryScreen() {
-        // TODO: declare winner
+    private boolean displayVictoryScreen() throws IOException {
         String winner;
-        if(combatant1.getHealth() > 0){
+        if (combatant1.getHealth() > 0) {
             winner = combatant1.getName();
-        }
-        else{
+        } else {
             winner = combatant2.getName();
         }
+        victoryBanner();
+        if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0) {
+            System.out.println("**********************************************************");
+            System.out.println("    Congratulations " + winner + "! You won!");
+            System.out.println("**********************************************************");
+        }
+        if (combatant1.getHealth() < 0 || combatant2.getHealth() < 0) {
+            System.out.println("*******************************************************************************");
+            System.out.println("    Congratulations " + winner + "! You decimated your opponent!");
+            System.out.println("*******************************************************************************");
+        }
 
-
-        System.out.println("************************************************");
-        System.out.println("*                                              *");
-        System.out.println("*    Congratulations " + winner + "! You won!    *");
-        System.out.println("*                                              *");
-        System.out.println("************************************************");
-
-
-        System.out.print("Play again? [y/n]");
+        System.out.print("Enter 'y' to play again or enter any key to exit: ");
         return ("y".equalsIgnoreCase(scanner.next()));
     }
 
     private void updateScreen() {
-        // TODO: display turn results
         System.out.println(combatant1.getName() + " Health: " + combatant1.getHealth());
         System.out.println(combatant2.getName() + " Health: " + combatant2.getHealth());
     }
+
 
     private void takeTurn() {
         if (playerTurn == firstPlayer) {
@@ -109,7 +110,7 @@ public class Controller {
             System.out.print(stringBuilder);
             String attackInput = scanner.next();
 
-            if (attackInput.matches("\\d{1}") && Integer.parseInt(attackInput) <= attacks.length) {
+            if (attackInput.matches(oneDigitRegex) && Integer.parseInt(attackInput) <= attacks.length) {
                 System.out.println(attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target));
                 isValid = false;
             }
@@ -128,12 +129,15 @@ public class Controller {
         builder.append(weaponSelectPrompt);
         Weapon[] weapons = Weapon.values();
         for (int i = 0; i < weapons.length - 1; i++) {
-            builder.append(weapons[i].getPrintName());
+            builder.append(weapons[i].getPrintName()).append(Arrays.toString(weapons[i].getAttacks()));
             builder.append(", ");
+            builder.append("\n");
         }
         builder.append(weapons[weapons.length - 1].getPrintName());
+        builder.append(Arrays.toString(weapons[weapons.length - 1].getAttacks()));
+
         System.out.print(builder);
-        while(true) {
+        while (true) {
             String input = scanner.next();
             for (Weapon weapon : Weapon.values()) {
                 if (input.equalsIgnoreCase(weapon.getPrintName())) {
@@ -173,11 +177,13 @@ public class Controller {
         }
     }
 
-    private void greet() {
-        System.out.println(greet1);
-        System.out.println(greet2);
-        System.out.println(greet3);
-        System.out.println(greet2);
-        System.out.println(greet1);
+    private void greet() throws IOException {
+        Files.lines(Path.of(GREET_FILE_PATH))
+                .forEach(System.out::println);
+    }
+
+    private void victoryBanner() throws IOException {
+        Files.lines(Path.of(VICTORY_FILE_PATH))
+                .forEach(System.out::println);
     }
 }
