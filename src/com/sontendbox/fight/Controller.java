@@ -129,7 +129,7 @@ public class Controller {
         builder.append(weaponSelectPrompt);
         Weapon[] weapons = Weapon.values();
         for (int i = 0; i < weapons.length - 1; i++) {
-            builder.append(weapons[i].getPrintName() + weapons[i].getAttacks());
+            builder.append(weapons[i].getPrintName() + Arrays.toString(weapons[i].getAttacks()));
             builder.append(", ");
         }
         builder.append(weapons[weapons.length - 1].getPrintName());
