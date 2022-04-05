@@ -1,7 +1,8 @@
 package com.sontendbox.fight;
 
-import com.apps.util.Console;
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -9,9 +10,8 @@ public class Controller {
     private static final String weaponSelectPrompt = "Select weapon. Weapons available are: \n";
     private static final String selectAttack = "Select attack: ";
     private static final String CHOSE = " chose ";
-    private static final String greet1 = "************************************************";
-    private static final String greet2 = "*                                              *";
-    private static final String greet3 = "* WELCOME T0 CONSOLE COMBAT! PREPARE TO FIGHT! *";
+    private static final String GREET_FILE_PATH = "resources/greeting.txt";
+    private static final String VICTORY_FILE_PATH = "resources/victory.txt";
     private static final String oneDigitRegex = "/d{1}";
     private static final String bracketRegex = "[%s]";
     private static final String numPlayersPrompt = "Enter number of players (0-2) players allowed: ";
@@ -30,7 +30,7 @@ public class Controller {
     private int firstPlayer;
     private int playerTurn = 1;
 
-    public void execute() {
+    public void execute() throws IOException {
         boolean playAgain = true;
         while (playAgain) {
             firstPlayer = (int) (Math.random() * 2 + 1);
@@ -46,30 +46,26 @@ public class Controller {
         }
     }
 
-    private boolean displayVictoryScreen() {
-        // TODO: declare winner
+    private boolean displayVictoryScreen() throws IOException {
         String winner;
         if (combatant1.getHealth() > 0) {
             winner = combatant1.getName();
         } else {
             winner = combatant2.getName();
         }
+        victoryBanner();
+        System.out.println("**********************************************************");
+        System.out.println("    Congratulations " + winner + "! You won!");
+        System.out.println("**********************************************************");
 
 
-        System.out.println("************************************************");
-        System.out.println("*                                              *");
-        System.out.println("*    Congratulations " + winner + "! You won!            *");
-        System.out.println("*                                              *");
-        System.out.println("************************************************");
 
 
-        System.out.print("Play again? [y/n]");
+        System.out.print("Enter 'y' to play again or enter any key to exit: ");
         return ("y".equalsIgnoreCase(scanner.next()));
     }
 
     private void updateScreen() {
-        // TODO: display turn results
-        Console.clear();
         System.out.println(combatant1.getName() + " Health: " + combatant1.getHealth());
         System.out.println(combatant2.getName() + " Health: " + combatant2.getHealth());
     }
@@ -177,11 +173,13 @@ public class Controller {
         }
     }
 
-    private void greet() {
-        System.out.println(greet1);
-        System.out.println(greet2);
-        System.out.println(greet3);
-        System.out.println(greet2);
-        System.out.println(greet1);
+    private void greet() throws IOException {
+        Files.lines(Path.of("resources/greeting.txt"))
+                .forEach(System.out::println);
+    }
+
+    private void victoryBanner() throws IOException {
+        Files.lines(Path.of("resources/victory.txt"))
+                .forEach(System.out::println);
     }
 }
