@@ -10,10 +10,17 @@ class Fighter {
     private Weapon weapon;
     private int health = 100;
     private String name;
+    private Character character = Character.DEFAULT;
 
     Fighter(Weapon weapon, String name) {
         this.weapon = weapon;
         this.name = name;
+    }
+
+    Fighter(Weapon weapon, String name, Character character) {
+        this.character = character;
+        this.name = name;
+        this.weapon = weapon;
     }
 
     Attack[] getAttacks() {
@@ -45,7 +52,7 @@ class Fighter {
     }
 
     int getDamage(Attack attack) {
-        return weapon.damageCalculation(attack);
+        return character.getDamageMod() + weapon.damageCalculation(attack);
     }
 
     int getHealth(){
