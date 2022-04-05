@@ -63,6 +63,10 @@ class Fighter {
         return health;
     }
 
+    public Character getCharacter() {
+        return character;
+    }
+
     private void takeDamage(int damage) {
         health -= damage;
     }
