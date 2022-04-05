@@ -1,4 +1,4 @@
-package com.sontendbox.fight;
+package com.sontendbox.konsole_combat;
 
 import java.io.IOException;
 import java.nio.file.Files;
