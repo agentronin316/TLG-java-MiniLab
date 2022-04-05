@@ -1,0 +1,16 @@
+╔╗╔═╗                ╔╗         ╔═══╗        ╔╗        ╔╗       ╔╗        ╔╗ ╔╗         ╔═══╗      ╔╗   ╔╗ ╔╗
+║║║╔╝                ║║         ║╔═╗║        ║║       ╔╝╚╗      ║║       ╔╝╚╗║║         ║╔══╝      ║║  ╔╝╚╗║║
+║╚╝╝ ╔══╗╔═╗ ╔══╗╔══╗║║ ╔══╗    ║║ ╚╝╔══╗╔╗╔╗║╚═╗╔══╗ ╚╗╔╝      ║║   ╔══╗╚╗╔╝╚╝╔══╗     ║╚══╗╔╗╔══╗║╚═╗╚╗╔╝║║
+║╔╗║ ║╔╗║║╔╗╗║══╣║╔╗║║║ ║╔╗║    ║║ ╔╗║╔╗║║╚╝║║╔╗║╚ ╗║  ║║       ║║ ╔╗║╔╗║ ║║   ║══╣     ║╔══╝╠╣║╔╗║║╔╗║ ║║ ╚╝
+║║║╚╗║╚╝║║║║║╠══║║╚╝║║╚╗║║═╣    ║╚═╝║║╚╝║║║║║║╚╝║║╚╝╚╗ ║╚╗╔╗    ║╚═╝║║║═╣ ║╚╗  ╠══║    ╔╝╚╗  ║║║╚╝║║║║║ ║╚╗╔╗
+╚╝╚═╝╚══╝╚╝╚╝╚══╝╚══╝╚═╝╚══╝    ╚═══╝╚══╝╚╩╩╝╚══╝╚═══╝ ╚═╝╚╝    ╚═══╝╚══╝ ╚═╝  ╚══╝    ╚══╝  ╚╝╚═╗║╚╝╚╝ ╚═╝╚╝
+                                                                                               ╔═╝║
+                                                                                               ╚══╝
+                                       Before you fight!
+-----------------------------------------------------------------------------------------------------------------------
+| * Konsole combat™ is a console based, fighting game pitting up to two players against each other in combat.         |
+| * Players take turns attacking each other using the various attacks associated with their weapon types.             |
+| * Want to learn the ropes? Enter 0 players to watch 2 computer controlled opponents of your creation fight it out!  |
+|  or Enter 1 player to hone your fighting strategy against a computer controlled opponent.                           |
+| * Each weapon has it's benefits and trade offs so choose wisely! Do you have what it takes to be victorious?        |
+-----------------------------------------------------------------------------------------------------------------------
