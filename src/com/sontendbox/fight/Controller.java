@@ -12,7 +12,7 @@ public class Controller {
     private static final String CHOSE = " chose ";
     private static final String GREET_FILE_PATH = "resources/greeting.txt";
     private static final String VICTORY_FILE_PATH = "resources/victory.txt";
-    private static final String oneDigitRegex = "/d{1}";
+    private static final String oneDigitRegex = "\\d{1}";
     private static final String bracketRegex = "[%s]";
     private static final String numPlayersPrompt = "Enter number of players (0-2) players allowed: ";
     private static final String twoPlayerAnnouncement = "Battle is between 2 human controlled fighters";
