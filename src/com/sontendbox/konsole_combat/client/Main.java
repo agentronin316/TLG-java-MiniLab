@@ -1,6 +1,6 @@
-package com.sontendbox.client;
+package com.sontendbox.konsole_combat.client;
 
-import com.sontendbox.fight.Controller;
+import com.sontendbox.konsole_combat.Controller;
 
 import java.io.IOException;
 
