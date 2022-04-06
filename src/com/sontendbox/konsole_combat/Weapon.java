@@ -7,7 +7,7 @@ enum Weapon {
     BOW("shoots", 7, "bow", Attack.BALANCED, Attack.ACCURATE),
     SWORD("slashes", 7, "sword", Attack.ACCURATE, Attack.BALANCED, Attack.HEAVY),
     MACE("bashes", 7, "mace", Attack.BALANCED, Attack.HEAVY),
-    WARHAMMER("crushes", 7, "warhammer", Attack.HEAVY);
+    BATTLEAXE("crushes", 7, "battleaxe", Attack.HEAVY);
 
     private final String verb;
     private final int baseDamage;
