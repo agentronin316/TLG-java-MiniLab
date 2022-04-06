@@ -1,6 +1,6 @@
-package com.sontendbox.konsole_combat.client;
+package com.sontendbox.konsolecombat.client;
 
-import com.sontendbox.konsole_combat.Controller;
+import com.sontendbox.konsolecombat.Controller;
 
 
 

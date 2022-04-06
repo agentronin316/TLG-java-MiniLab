@@ -6,4 +6,4 @@
 
 #     Note that your application JAR stays on the classpath, regardless of whether you're using additional libraries or not.
 
-java -classpath konsole_combat-1.0.jar:"lib/app-utils-1.1.jar" com.sontendbox.konsole_combat.client.Main
+java -classpath konsole_combat-1.0.jar:"lib/app-utils-1.1.jar" com.sontendbox.konsolecombat.client.Main
