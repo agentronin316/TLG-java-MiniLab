@@ -3,11 +3,15 @@ package com.sontendbox.konsole_combat;
 import java.util.Arrays;
 
 enum Weapon {
-    FIST("punches", 7, "fist", Attack.BALANCED),
-    BOW("shoots", 7, "bow", Attack.BALANCED, Attack.ACCURATE),
-    SWORD("slashes", 7, "sword", Attack.ACCURATE, Attack.BALANCED, Attack.HEAVY),
-    MACE("bashes", 7, "mace", Attack.BALANCED, Attack.HEAVY),
-    BATTLEAXE("crushes", 7, "battleaxe", Attack.HEAVY);
+
+    
+
+    FIST("punches", 8, "fist", Attack.BALANCED),
+    BOW("shoots", 8, "bow", Attack.ACCURATE),
+    SWORD("slashes", 8, "sword", Attack.ACCURATE, Attack.BALANCED),
+    MACE("bashes", 8, "mace", Attack.BALANCED, Attack.HEAVY),
+    BATTLEAXE("hacks", 8, "battleaxe", Attack.HEAVY);
+
 
     private final String verb;
     private final int baseDamage;
