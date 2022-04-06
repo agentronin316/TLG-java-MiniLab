@@ -1,7 +1,5 @@
 package com.sontendbox.konsole_combat;
 
-import com.apps.util.Console;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,14 +15,14 @@ public class Controller {
     private static final String numPlayersPrompt = "Enter number of players (0-2) players allowed: ";
     private static final String twoPlayerAnnouncement = "Battle is between 2 human controlled fighters";
     private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
-                                                       "1 computer controlled fighter";
+            "1 computer controlled fighter";
     private static final String zeroPlayerAnnouncement = "Battle is between 2 computer controlled fighters";
     private static final String namePrompt = "Enter a name for this combatant: ";
     private static Controller instance;
     private static CombatSubController combatContol;
 
     public static Controller getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new Controller();
         }
         CombatSubController.setController(instance);
@@ -38,11 +36,11 @@ public class Controller {
 
     private Scanner scanner = new Scanner(System.in);
 
-    public void execute() throws IOException {
+    public void execute() {
         boolean playAgain = true;
         while (playAgain) {
 
-            greet();
+            show(GREET_FILE_PATH);
             numPlayersPrompt();
             weaponSelection();
 
@@ -50,10 +48,6 @@ public class Controller {
 
         }
     }
-
-
-
-
 
     private void weaponSelection() {
         Fighter combatant = getCombatant();
@@ -78,7 +72,7 @@ public class Controller {
         }
         builder.append(weapons[weapons.length - 1].getPrintName()).append(Arrays.toString(weapons[weapons.length - 1].getAttacks()));
         System.out.print(builder);
-        while(true) {
+        while (true) {
             String input = scanner.next();
             for (Weapon weapon : Weapon.values()) {
                 if (input.equalsIgnoreCase(weapon.getPrintName())) {
@@ -87,12 +81,12 @@ public class Controller {
                     System.out.println(selectCharacter);
                     for (Character character : characters) {
                         System.out.printf("%s, Damage mod: %s, Accuracy mod: %s\n",
-                                character.getPrintName(), character.getDamageMod(), character.getAccuracyMod() +"%");
+                                character.getPrintName(), character.getDamageMod(), character.getAccuracyMod() + "%");
                     }
                     String charSelection = scanner.next();
-                    for(Character character : Character.values()) {
+                    for (Character character : Character.values()) {
                         if (charSelection.equalsIgnoreCase(character.getPrintName())) {
-                            return new Fighter(weapon, name,character);
+                            return new Fighter(weapon, name, character);
                         }
 
                     }
@@ -129,17 +123,13 @@ public class Controller {
         }
     }
 
-    private void greet() throws IOException {
-        Files.lines(Path.of(GREET_FILE_PATH))
-                .forEach(System.out::println);
-    }
-
-    void victory() {
+    private void show(String path) {
         try {
-            Files.lines(Path.of(VICTORY_FILE_PATH))
+            Files.lines(Path.of(path))
                     .forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }
