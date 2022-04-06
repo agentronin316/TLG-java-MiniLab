@@ -65,6 +65,7 @@ class CombatSubController {
     //business methods
 
     public boolean runCombat(){
+        preemptiveStrike();
         firstPlayer = (int)(Math.random() * 2 + 1);
         while (combatant1.getHealth() > 0 && combatant2.getHealth() > 0) {
             takeTurn();
@@ -77,6 +78,17 @@ class CombatSubController {
             Console.clear();
         }
         return displayVictoryScreen();
+    }
+
+    private void preemptiveStrike() {
+        firstPlayer = 1;
+        if(combatant1.getWeaponName().equals("bow")) {
+            takeTurn();
+        }
+        if(combatant2.getWeaponName().equals("bow")) {
+            playerTurn = 2;
+            takeTurn();
+        }
     }
 
     private void updateScreen() {
