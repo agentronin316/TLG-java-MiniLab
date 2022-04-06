@@ -11,7 +11,6 @@ public class Controller {
     private static final String selectCharacter = "Select character. Available characters are: ";
     private static final String CHOSE = " chose ";
     private static final String GREET_FILE_PATH = "resources/greeting.txt";
-    private static final String VICTORY_FILE_PATH = "resources/victory.txt";
     private static final String numPlayersPrompt = "Enter number of players (0-2) players allowed: ";
     private static final String twoPlayerAnnouncement = "Battle is between 2 human controlled fighters";
     private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
@@ -123,7 +122,7 @@ public class Controller {
         }
     }
 
-    private void show(String path) {
+    void show(String path) {
         try {
             Files.lines(Path.of(path))
                     .forEach(System.out::println);

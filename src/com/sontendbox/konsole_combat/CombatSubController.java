@@ -8,6 +8,7 @@ class CombatSubController {
     private static final String selectAttack = "Select attack: ";
     private static final String oneDigitRegex = "\\d{1}";
     private static final String bracketRegex = "[%s]";
+    private static final String VICTORY_FILE_PATH = "resources/victory.txt";
     private static Controller controller;
     //this will always be a reference to the only instance of this class to exist
     private static CombatSubController instance;
@@ -133,7 +134,7 @@ class CombatSubController {
             winner = combatant2.getName();
         }
 
-        controller.victory();
+        controller.show(VICTORY_FILE_PATH);
         if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0){
             System.out.println("*********************************************************");
             System.out.println("   Congratulations " + winner + "! You won!    ");
