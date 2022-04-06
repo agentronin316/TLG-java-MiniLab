@@ -168,12 +168,16 @@ public class Controller {
                 break;
             case "mace":
                 show(MACE_PLAYER_FILE_PATH);
+                break;
             case "fist":
                 show(FIST_PLAYER_FILE_PATH);
+                break;
             case "sword":
                 show(SWORD_PLAYER_FILE_PATH);
+                break;
             case "battleaxe":
                 show(AXE_PLAYER_FILE_PATH);
+                break;
 
         }
     }

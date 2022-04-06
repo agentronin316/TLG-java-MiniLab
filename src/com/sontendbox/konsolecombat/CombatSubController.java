@@ -27,7 +27,7 @@ class CombatSubController {
     }
 
     //private ctor
-    private CombatSubController(){
+    private CombatSubController() {
     }
 
     private Fighter combatant1;
@@ -64,9 +64,9 @@ class CombatSubController {
 
     //business methods
 
-    public boolean runCombat(){
+    public boolean runCombat() {
         preemptiveStrike();
-        firstPlayer = (int)(Math.random() * 2 + 1);
+        firstPlayer = (int) (Math.random() * 2 + 1);
         while (combatant1.getHealth() > 0 && combatant2.getHealth() > 0) {
             takeTurn();
             updateScreen();
@@ -82,9 +82,9 @@ class CombatSubController {
 
     private void preemptiveStrike() {
         firstPlayer = 1;
-        if(combatant1.getWeaponName().equals("bow")) {
+        if (combatant1.getWeaponName().equals("bow")) {
             System.out.println(combatant1.getName() + "fires a arrow while " +
-                               combatant2.getName() + " is approaching!");
+                    combatant2.getName() + " is approaching!");
             takeTurn();
             updateScreen();
             try {
@@ -95,7 +95,7 @@ class CombatSubController {
             Console.clear();
             playerTurn = 1;
         }
-        if(combatant2.getWeaponName().equals("bow")) {
+        if (combatant2.getWeaponName().equals("bow")) {
             System.out.println(combatant2.getName() + "fires a arrow while " +
                     combatant1.getName() + " is approaching!");
             playerTurn = 2;
@@ -126,6 +126,7 @@ class CombatSubController {
                 int attackIndex = (int) (Math.random() * attacks.length);
                 System.out.println(combatant1.attack(attacks[attackIndex], combatant2));
             }
+
         } else {
             Attack[] attacks = combatant2.getAttacks();
             controller.displayPlayer(combatant2.getWeaponName());
@@ -136,6 +137,7 @@ class CombatSubController {
                 int attackIndex = (int) (Math.random() * attacks.length);
                 System.out.println(combatant2.attack(attacks[attackIndex], combatant1));
             }
+
         }
         playerTurn = (playerTurn % 2) + 1;
     }
@@ -162,38 +164,77 @@ class CombatSubController {
         for (int i = 0; i < attacks.length; i++) {
             stringBuilder.append(String.format(bracketFormatString, i + 1));
             stringBuilder.append(String.format("| %10S | %9S | %5S", attacks[i].name(),
-                                               attacker.getAccuracy(attacks[i]) + "%",
-                                               attacker.getDamage(attacks[i])));
+                    attacker.getAccuracy(attacks[i]) + "%",
+                    attacker.getDamage(attacks[i])));
             stringBuilder.append("\n");
         }
         return stringBuilder;
     }
 
-    private boolean displayVictoryScreen(){
+    private boolean displayVictoryScreen() {
 
         String winner;
-        if(combatant1.getHealth() > 0){
+        if (combatant1.getHealth() > 0) {
             winner = combatant1.getName();
-        }
-        else{
+        } else {
             winner = combatant2.getName();
         }
 
         controller.show(VICTORY_FILE_PATH);
-        if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0){
-            System.out.println(centerText("", winnerBannerWidth, '*'));
-            String victoryText = "Congratulations " + winner + "! You won!";
-            victoryText = centerText(victoryText, winnerBannerWidth, '*');
-            System.out.println(victoryText);
-            System.out.println(centerText("", winnerBannerWidth, '*'));
+        if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0) {
+            if (combatant1.getName().equalsIgnoreCase("jose") || combatant2.getName().equalsIgnoreCase("jose")) {
+                if (winner.equalsIgnoreCase("jose")) {
+                    System.out.println(centerText("", winnerBannerWidth, '*'));
+                    String victoryText = winner + " only won cause it's rigged!!!";
+                    victoryText = centerText(victoryText, winnerBannerWidth, '*');
+                    System.out.println(victoryText);
+                    System.out.println(centerText("", winnerBannerWidth, '*'));
+                } else {
+                    System.out.println(centerText("", winnerBannerWidth, '*'));
+                    String victoryText = winner + " reminds Jose this isn't Duck Race and he can't win them all!";
+                    victoryText = centerText(victoryText, winnerBannerWidth, '*');
+                    System.out.println(victoryText);
+                    System.out.println(centerText("", winnerBannerWidth, '*'));
+                }
+
+            } else {
+                System.out.println(centerText("", winnerBannerWidth, '*'));
+                String victoryText = "Congratulations " + winner + "! You won!";
+                victoryText = centerText(victoryText, winnerBannerWidth, '*');
+                System.out.println(victoryText);
+                System.out.println(centerText("", winnerBannerWidth, '*'));
+            }
         }
-        if (combatant1.getHealth() < 0 || combatant2.getHealth() < 0){
-            System.out.println(centerText("", winnerBannerWidth, '*'));
-            String victoryText = "Congratulations " + winner + "! You decimated your opponent!";
-            victoryText = centerText(victoryText, winnerBannerWidth, '*');
-            System.out.println(victoryText);
-            System.out.println(centerText("", winnerBannerWidth, '*'));
-        }
+
+        if (combatant1.getHealth() < 0 || combatant2.getHealth() < 0) {
+            if (winner.equalsIgnoreCase("jose")) {
+                if (winner.equalsIgnoreCase("jose")) {
+                        System.out.println(centerText("", winnerBannerWidth, '*'));
+                        String victoryText = winner + " only won because it's rigged!!!";
+                        victoryText = centerText(victoryText, winnerBannerWidth, '*');
+                        System.out.println(victoryText);
+                        System.out.println(centerText("", winnerBannerWidth, '*'));
+
+                    } else {
+                        System.out.println(centerText("", winnerBannerWidth, '*'));
+                        String victoryText = winner + " reminds Jose this isn't Duck Race and he can't win them all!";
+                        victoryText = centerText(victoryText, winnerBannerWidth, '*');
+                        System.out.println(victoryText);
+                        System.out.println(centerText("", winnerBannerWidth, '*'));
+                    }
+
+                }
+            }
+            else {
+                System.out.println(centerText("", winnerBannerWidth, '*'));
+                String victoryText = "Congratulations " + winner + "! You decimated your opponent!";
+                victoryText = centerText(victoryText, winnerBannerWidth, '*');
+                System.out.println(victoryText);
+                System.out.println(centerText("", winnerBannerWidth, '*'));
+            }
+
+
+
 
 
         System.out.print("Play again? [y/n]");
@@ -206,7 +247,7 @@ class CombatSubController {
     }
 
     String centerText(String text, int width, char filler) {
-        if (text.length() >= width){
+        if (text.length() >= width) {
             return text;
         } else {
             StringBuilder builder = new StringBuilder();
