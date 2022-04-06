@@ -132,4 +132,12 @@ public class Controller {
         }
     }
 
+    void victory(){
+        try {
+            Files.lines(Path.of(VICTORY_FILE_PATH))
+                    .forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
