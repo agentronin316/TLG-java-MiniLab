@@ -148,14 +148,14 @@ class CombatSubController {
         if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0){
             System.out.println("**************************************************************************"); //75 wide
             String victoryText = "Congratulations " + winner + "! You won!";
-            victoryText = centerText(victoryText, 75);
+            victoryText = centerText(victoryText, 75, '*');
             System.out.println(victoryText);
             System.out.println("**************************************************************************"); //75 wide
         }
         if (combatant1.getHealth() < 0 || combatant2.getHealth() < 0){
             System.out.println("**************************************************************************"); //75 wide
             String victoryText = "Congratulations " + winner + "! You decimated your opponent!";
-            victoryText = centerText(victoryText, 75);
+            victoryText = centerText(victoryText, 75, '*');
             System.out.println(victoryText);
             System.out.println("**************************************************************************"); //75 wide
         }
@@ -183,4 +183,24 @@ class CombatSubController {
             return builder.toString();
         }
     }
+
+    String centerText(String text, int width, char filler) {
+        if (text.length() >= width){
+            return text;
+        } else {
+            StringBuilder builder = new StringBuilder();
+            int leftPad = (width - text.length()) / 2;
+            for (int i = 0; i < leftPad; i++){
+                builder.append(filler);
+            }
+            builder.append(text);
+            int rightPad = width - builder.length();
+            for (int i = 0; i < rightPad; i++){
+                builder.append(filler);
+            }
+            return builder.toString();
+        }
+    }
+
+
 }
