@@ -217,7 +217,7 @@ class CombatSubController {
 
                     } else {
                         System.out.println(centerText("", winnerBannerWidth, '*'));
-                        String victoryText = winner + " reminds Jose this isn't Duck Race and he can't win them all!";
+                        String victoryText = " " + winner + " reminds Jose this isn't Duck Race and he can't win them all!";
                         victoryText = centerText(victoryText, winnerBannerWidth, '*');
                         System.out.println(victoryText);
                         System.out.println(centerText("", winnerBannerWidth, '*'));
