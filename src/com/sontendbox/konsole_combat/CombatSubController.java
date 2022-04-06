@@ -84,6 +84,7 @@ class CombatSubController {
         firstPlayer = 1;
         if(combatant1.getWeaponName().equals("bow")) {
             takeTurn();
+            playerTurn = 1;
         }
         if(combatant2.getWeaponName().equals("bow")) {
             playerTurn = 2;
