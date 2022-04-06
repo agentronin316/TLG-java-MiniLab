@@ -1,4 +1,4 @@
-package com.sontendbox.konsole_combat;
+package com.sontendbox.konsolecombat;
 
 import static org.junit.Assert.*;
 import org.junit.Before;

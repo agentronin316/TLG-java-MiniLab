@@ -1,4 +1,4 @@
-package com.sontendbox.konsole_combat;
+package com.sontendbox.konsolecombat;
 
 enum Character {
     DEFAULT(0, 0,"Default"),

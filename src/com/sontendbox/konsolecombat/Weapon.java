@@ -1,4 +1,4 @@
-package com.sontendbox.konsole_combat;
+package com.sontendbox.konsolecombat;
 
 import java.util.Arrays;
 
