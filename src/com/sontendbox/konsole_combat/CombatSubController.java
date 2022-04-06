@@ -101,18 +101,22 @@ class CombatSubController {
         if (playerTurn == firstPlayer) {
             Attack[] attacks = combatant1.getAttacks();
             if (isC1Human) {
+                controller.displayPlayer(combatant1.getWeaponName());
                 System.out.println(combatant1.getName() + " turn");
                 movePrompt(combatant1, combatant2, attacks);
             } else {
+                controller.displayPlayer(combatant1.getWeaponName());
                 int attackIndex = (int) (Math.random() * attacks.length);
                 System.out.println(combatant1.attack(attacks[attackIndex], combatant2));
             }
         } else {
             Attack[] attacks = combatant2.getAttacks();
             if (isC2Human) {
+                controller.displayPlayer(combatant2.getWeaponName());
                 System.out.println(combatant2.getName() + " turn");
                 movePrompt(combatant2, combatant1, attacks);
             } else {
+                controller.displayPlayer(combatant2.getWeaponName());
                 int attackIndex = (int) (Math.random() * attacks.length);
                 System.out.println(combatant2.attack(attacks[attackIndex], combatant1));
             }
