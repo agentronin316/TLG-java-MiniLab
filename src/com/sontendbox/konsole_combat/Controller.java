@@ -1,5 +1,8 @@
 package com.sontendbox.konsole_combat;
 
+import com.apps.util.Console;
+
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,9 +23,11 @@ public class Controller {
     private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
             "1 computer controlled fighter";
     private static final String zeroPlayerAnnouncement = "Battle is between 2 computer controlled fighters";
-    private static final String namePrompt = "Enter a name for this combatant: ";
+    private static final String namePrompt = "Enter a name for player";
     private static Controller instance;
     private static CombatSubController combatContol;
+
+    private int playerNumber = 1;
 
     public static Controller getInstance() {
         if (instance == null) {
@@ -66,6 +71,10 @@ public class Controller {
     }
 
     private Fighter getCombatant() {
+        System.out.printf("%s %s: \n",namePrompt, playerNumber);
+        playerNumber += 1;
+        String name = scanner.next();
+        Console.clear();
         StringBuilder builder = new StringBuilder();
         show(WEAPON_TIP_FILE_PATH);
         builder.append(weaponSelectPrompt);
@@ -84,10 +93,7 @@ public class Controller {
             String input = scanner.next();
             for (Weapon weapon : Weapon.values()) {
                 if (input.equalsIgnoreCase(weapon.getPrintName())) {
-                    System.out.println();
-                    System.out.print(namePrompt);
-                    String name = scanner.next();
-                    System.out.println();
+                    Console.clear();
                     show(CHARACTER_TIP_FILE_PATH);
                     System.out.println(selectCharacter);
                     for (Character character : characters) {
@@ -96,6 +102,7 @@ public class Controller {
                     }
                     System.out.print(selectCharacter2);
                     String charSelection = scanner.next();
+                    Console.clear();
                     for (Character character : Character.values()) {
                         if (charSelection.equalsIgnoreCase(character.getPrintName())) {
                             return new Fighter(weapon, name, character);
