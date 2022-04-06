@@ -7,7 +7,7 @@ import java.util.Scanner;
 class CombatSubController {
     private static final String selectAttack = "Select attack: ";
     private static final String oneDigitRegex = "\\d{1}";
-    private static final String bracketRegex = "[%s]";
+    private static final String bracketFormatString = "[%s]";
     private static final String VICTORY_FILE_PATH = "resources/victory.txt";
     private static Controller controller;
     //this will always be a reference to the only instance of this class to exist
@@ -106,12 +106,7 @@ class CombatSubController {
     }
 
     private void movePrompt(Fighter attacker, Fighter target, Attack[] attacks) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(selectAttack);
-        for (int i = 0; i < attacks.length; i++) {
-            stringBuilder.append(String.format(bracketRegex, i + 1));
-            stringBuilder.append(attacks[i].name().toLowerCase());
-        }
+        StringBuilder stringBuilder = buildAttacksString(attacker, attacks);
         boolean isValid = true;
         while (isValid) {
             System.out.print(stringBuilder);
@@ -122,6 +117,21 @@ class CombatSubController {
                 isValid = false;
             }
         }
+    }
+
+    private StringBuilder buildAttacksString(Fighter attacker, Attack[] attacks) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(selectAttack);
+        stringBuilder.append("\n   ");
+        stringBuilder.append(String.format("| %10S | %9S | %5S\n", "Attack", "Accuracy", "Damage"));
+        for (int i = 0; i < attacks.length; i++) {
+            stringBuilder.append(String.format(bracketFormatString, i + 1));
+            stringBuilder.append(String.format("| %10S | %9S | %5S", attacks[i].name(),
+                                               attacker.getAccuracy(attacks[i]) + "%",
+                                               attacker.getDamage(attacks[i])));
+            stringBuilder.append("\n");
+        }
+        return stringBuilder;
     }
 
     private boolean displayVictoryScreen(){
@@ -136,18 +146,41 @@ class CombatSubController {
 
         controller.show(VICTORY_FILE_PATH);
         if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0){
-            System.out.println("*********************************************************");
-            System.out.println("   Congratulations " + winner + "! You won!    ");
-            System.out.println("*********************************************************");
+            System.out.println("**************************************************************************"); //75 wide
+            String victoryText = "Congratulations " + winner + "! You won!";
+            victoryText = centerText(victoryText, 75);
+            System.out.println(victoryText);
+            System.out.println("**************************************************************************"); //75 wide
         }
         if (combatant1.getHealth() < 0 || combatant2.getHealth() < 0){
-            System.out.println("************************************************************************");
-            System.out.println("   Congratulations " + winner + "! You decimated your opponent!    ");
-            System.out.println("************************************************************************");
+            System.out.println("**************************************************************************"); //75 wide
+            String victoryText = "Congratulations " + winner + "! You decimated your opponent!";
+            victoryText = centerText(victoryText, 75);
+            System.out.println(victoryText);
+            System.out.println("**************************************************************************"); //75 wide
         }
 
 
         System.out.print("Play again? [y/n]");
         return ("y".equalsIgnoreCase(scanner.next()));
+    }
+
+
+    String centerText(String text, int width) {
+        if (text.length() >= width){
+            return text;
+        } else {
+            StringBuilder builder = new StringBuilder();
+            int leftPad = (width - text.length()) / 2;
+            for (int i = 0; i < leftPad; i++){
+                builder.append(' ');
+            }
+            builder.append(text);
+            int rightPad = width - builder.length();
+            for (int i = 0; i < rightPad; i++){
+                builder.append(' ');
+            }
+            return builder.toString();
+        }
     }
 }
