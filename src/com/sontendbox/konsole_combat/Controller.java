@@ -7,10 +7,14 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Controller {
-    private static final String weaponSelectPrompt = "Select weapon. Current weapon availability is limited to: \n";
+    private static final String weaponSelectPrompt = "Select weapon. Weapons to chose from are: \n";
+    private static final String weaponSelectPrompt2 = "Enter the name of a weapon listed above \n";
     private static final String selectCharacter = "Select character. Available characters are: ";
+    private static final String selectCharacter2 = "Enter the name of a character listed above \n";
     private static final String CHOSE = " chose ";
     private static final String GREET_FILE_PATH = "resources/greeting.txt";
+    private static final String WEAPON_TIP_FILE_PATH = "resources/weaponHelp.txt";
+    private static final String CHARACTER_TIP_FILE_PATH = "resources/characterHelp.txt";
     private static final String numPlayersPrompt = "Enter number of players (0-2) players allowed: ";
     private static final String twoPlayerAnnouncement = "Battle is between 2 human controlled fighters";
     private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
@@ -53,14 +57,17 @@ public class Controller {
         combatContol.setCombatant1(combatant);
         System.out.println(combatant.getName() + CHOSE + combatant.getWeaponName() + " and "
                 + combatant.getCharacter().getPrintName());
+        System.out.println();
         combatant = getCombatant();
         combatContol.setCombatant2(combatant);
         System.out.println(combatant.getName() + CHOSE + combatant.getWeaponName() + " and "
                 + combatant.getCharacter().getPrintName());
+        System.out.println();
     }
 
     private Fighter getCombatant() {
         StringBuilder builder = new StringBuilder();
+        show(WEAPON_TIP_FILE_PATH);
         builder.append(weaponSelectPrompt);
         Weapon[] weapons = Weapon.values();
         Character[] characters = Character.values();
@@ -71,17 +78,23 @@ public class Controller {
         }
         builder.append(weapons[weapons.length - 1].getPrintName()).append(Arrays.toString(weapons[weapons.length - 1].getAttacks()));
         System.out.print(builder);
+        System.out.print("\n");
+        System.out.print(weaponSelectPrompt2);
         while (true) {
             String input = scanner.next();
             for (Weapon weapon : Weapon.values()) {
                 if (input.equalsIgnoreCase(weapon.getPrintName())) {
+                    System.out.println();
                     System.out.print(namePrompt);
                     String name = scanner.next();
+                    System.out.println();
+                    show(CHARACTER_TIP_FILE_PATH);
                     System.out.println(selectCharacter);
                     for (Character character : characters) {
                         System.out.printf("%s, Damage mod: %s, Accuracy mod: %s\n",
                                 character.getPrintName(), character.getDamageMod(), character.getAccuracyMod() + "%");
                     }
+                    System.out.print(selectCharacter2);
                     String charSelection = scanner.next();
                     for (Character character : Character.values()) {
                         if (charSelection.equalsIgnoreCase(character.getPrintName())) {
@@ -106,16 +119,19 @@ public class Controller {
                         System.out.println(zeroPlayerAnnouncement);
                         combatContol.setC1Human(false);
                         combatContol.setC2Human(false);
+                        System.out.println();
                         break;
                     case 1:
                         System.out.println(onePlayerAnnouncement);
                         combatContol.setC1Human(true);
                         combatContol.setC2Human(false);
+                        System.out.println();
                         break;
                     case 2:
                         System.out.println(twoPlayerAnnouncement);
                         combatContol.setC1Human(true);
                         combatContol.setC2Human(true);
+                        System.out.println();
                         break;
                 }
             }
