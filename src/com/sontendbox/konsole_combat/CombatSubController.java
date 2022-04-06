@@ -9,6 +9,8 @@ class CombatSubController {
     private static final String oneDigitRegex = "\\d{1}";
     private static final String bracketFormatString = "[%s]";
     private static final String VICTORY_FILE_PATH = "resources/victory.txt";
+    private static final int winnerBannerWidth = 75;
+
     private static Controller controller;
     //this will always be a reference to the only instance of this class to exist
     private static CombatSubController instance;
@@ -146,18 +148,18 @@ class CombatSubController {
 
         controller.show(VICTORY_FILE_PATH);
         if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0){
-            System.out.println("**************************************************************************"); //75 wide
+            System.out.println(centerText("", winnerBannerWidth, '*'));
             String victoryText = "Congratulations " + winner + "! You won!";
-            victoryText = centerText(victoryText, 75, '*');
+            victoryText = centerText(victoryText, winnerBannerWidth, '*');
             System.out.println(victoryText);
-            System.out.println("**************************************************************************"); //75 wide
+            System.out.println(centerText("", winnerBannerWidth, '*'));
         }
         if (combatant1.getHealth() < 0 || combatant2.getHealth() < 0){
-            System.out.println("**************************************************************************"); //75 wide
+            System.out.println(centerText("", winnerBannerWidth, '*'));
             String victoryText = "Congratulations " + winner + "! You decimated your opponent!";
-            victoryText = centerText(victoryText, 75, '*');
+            victoryText = centerText(victoryText, winnerBannerWidth, '*');
             System.out.println(victoryText);
-            System.out.println("**************************************************************************"); //75 wide
+            System.out.println(centerText("", winnerBannerWidth, '*'));
         }
 
 
@@ -167,21 +169,7 @@ class CombatSubController {
 
 
     String centerText(String text, int width) {
-        if (text.length() >= width){
-            return text;
-        } else {
-            StringBuilder builder = new StringBuilder();
-            int leftPad = (width - text.length()) / 2;
-            for (int i = 0; i < leftPad; i++){
-                builder.append(' ');
-            }
-            builder.append(text);
-            int rightPad = width - builder.length();
-            for (int i = 0; i < rightPad; i++){
-                builder.append(' ');
-            }
-            return builder.toString();
-        }
+        return centerText(text, width, ' ');
     }
 
     String centerText(String text, int width, char filler) {
@@ -190,14 +178,10 @@ class CombatSubController {
         } else {
             StringBuilder builder = new StringBuilder();
             int leftPad = (width - text.length()) / 2;
-            for (int i = 0; i < leftPad; i++){
-                builder.append(filler);
-            }
+            builder.append(String.valueOf(filler).repeat(leftPad));
             builder.append(text);
             int rightPad = width - builder.length();
-            for (int i = 0; i < rightPad; i++){
-                builder.append(filler);
-            }
+            builder.append(String.valueOf(filler).repeat(rightPad));
             return builder.toString();
         }
     }
