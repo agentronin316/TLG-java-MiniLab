@@ -83,12 +83,30 @@ class CombatSubController {
     private void preemptiveStrike() {
         firstPlayer = 1;
         if(combatant1.getWeaponName().equals("bow")) {
+            System.out.println(combatant1.getName() + "fires a arrow while " +
+                               combatant2.getName() + " is approaching!");
             takeTurn();
+            updateScreen();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Console.clear();
             playerTurn = 1;
         }
         if(combatant2.getWeaponName().equals("bow")) {
+            System.out.println(combatant2.getName() + "fires a arrow while " +
+                    combatant1.getName() + " is approaching!");
             playerTurn = 2;
             takeTurn();
+            updateScreen();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Console.clear();
         }
     }
 
@@ -100,23 +118,21 @@ class CombatSubController {
     private void takeTurn() {
         if (playerTurn == firstPlayer) {
             Attack[] attacks = combatant1.getAttacks();
+            controller.displayPlayer(combatant1.getWeaponName());
             if (isC1Human) {
-                controller.displayPlayer(combatant1.getWeaponName());
                 System.out.println(combatant1.getName() + " turn");
                 movePrompt(combatant1, combatant2, attacks);
             } else {
-                controller.displayPlayer(combatant1.getWeaponName());
                 int attackIndex = (int) (Math.random() * attacks.length);
                 System.out.println(combatant1.attack(attacks[attackIndex], combatant2));
             }
         } else {
             Attack[] attacks = combatant2.getAttacks();
+            controller.displayPlayer(combatant2.getWeaponName());
             if (isC2Human) {
-                controller.displayPlayer(combatant2.getWeaponName());
                 System.out.println(combatant2.getName() + " turn");
                 movePrompt(combatant2, combatant1, attacks);
             } else {
-                controller.displayPlayer(combatant2.getWeaponName());
                 int attackIndex = (int) (Math.random() * attacks.length);
                 System.out.println(combatant2.attack(attacks[attackIndex], combatant1));
             }
