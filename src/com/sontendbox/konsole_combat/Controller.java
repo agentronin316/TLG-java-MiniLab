@@ -10,14 +10,21 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Controller {
+    private static final String GREET_FILE_PATH = "resources/greeting.txt";
+    private static final String WEAPON_TIP_FILE_PATH = "resources/weaponHelp.txt";
+    private static final String CHARACTER_TIP_FILE_PATH = "resources/characterHelp.txt";
+    private static final String BOW_PLAYER_FILE_PATH = "resources/bowPlayer.txt";
+    private static final String AXE_PLAYER_FILE_PATH = "resources/battleaxePlayer.txt";
+    private static final String FIST_PLAYER_FILE_PATH = "resources/fistPlayer.txt";
+    private static final String SWORD_PLAYER_FILE_PATH = "resources/swordPlayer.txt";
+    private static final String MACE_PLAYER_FILE_PATH = "resources/macePlayer.txt";
+
+
     private static final String weaponSelectPrompt = "Select weapon. Weapons to chose from are: \n";
     private static final String weaponSelectPrompt2 = "Enter the name of a weapon listed above \n";
     private static final String selectCharacter = "Select character. Available characters are: ";
     private static final String selectCharacter2 = "Enter the name of a character listed above \n";
     private static final String CHOSE = " chose ";
-    private static final String GREET_FILE_PATH = "resources/greeting.txt";
-    private static final String WEAPON_TIP_FILE_PATH = "resources/weaponHelp.txt";
-    private static final String CHARACTER_TIP_FILE_PATH = "resources/characterHelp.txt";
     private static final String numPlayersPrompt = "Enter number of players (0-2) players allowed: ";
     private static final String twoPlayerAnnouncement = "Battle is between 2 human controlled fighters";
     private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
@@ -60,13 +67,15 @@ public class Controller {
     private void weaponSelection() {
         Fighter combatant = getCombatant();
         combatContol.setCombatant1(combatant);
-        System.out.println(combatant.getName() + CHOSE + combatant.getWeaponName() + " and "
-                + combatant.getCharacter().getPrintName());
+        System.out.print("\t\t\t\t" +combatant.getName() + CHOSE + combatant.getWeaponName() + " and "
+                + combatant.getCharacter().getPrintName()+ "\n");
+        displayPlayer(combatant.getWeaponName());
         System.out.println();
         combatant = getCombatant();
         combatContol.setCombatant2(combatant);
         System.out.println(combatant.getName() + CHOSE + combatant.getWeaponName() + " and "
                 + combatant.getCharacter().getPrintName());
+        displayPlayer(combatant.getWeaponName());
         System.out.println();
     }
 
@@ -151,6 +160,22 @@ public class Controller {
                     .forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    void displayPlayer(String name){
+        switch (name){
+            case "bow":
+                show(BOW_PLAYER_FILE_PATH);
+                break;
+            case "mace":
+                show(MACE_PLAYER_FILE_PATH);
+            case "fist":
+                show(FIST_PLAYER_FILE_PATH);
+            case "sword":
+                show(SWORD_PLAYER_FILE_PATH);
+            case "battleaxe":
+                show(AXE_PLAYER_FILE_PATH);
+
         }
     }
 
