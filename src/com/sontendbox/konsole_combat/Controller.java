@@ -10,125 +10,60 @@ import java.util.Scanner;
 
 public class Controller {
     private static final String weaponSelectPrompt = "Select weapon. Current weapon availability is limited to: \n";
-    private static final String selectAttack = "Select attack: ";
     private static final String selectCharacter = "Select character. Available characters are: ";
     private static final String CHOSE = " chose ";
     private static final String GREET_FILE_PATH = "resources/greeting.txt";
     private static final String VICTORY_FILE_PATH = "resources/victory.txt";
-    private static final String oneDigitRegex = "\\d{1}";
-    private static final String bracketRegex = "[%s]";
     private static final String numPlayersPrompt = "Enter number of players (0-2) players allowed: ";
     private static final String twoPlayerAnnouncement = "Battle is between 2 human controlled fighters";
     private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
                                                        "1 computer controlled fighter";
     private static final String zeroPlayerAnnouncement = "Battle is between 2 computer controlled fighters";
     private static final String namePrompt = "Enter a name for this combatant: ";
+    private static Controller instance;
+    private static CombatSubController combatContol;
 
+    public static Controller getInstance() {
+        if (instance == null){
+            instance = new Controller();
+        }
+        CombatSubController.setController(instance);
+        return instance;
+    }
 
-    private Fighter combatant1;
-    private Fighter combatant2;
-    private boolean isC1Human;
-    private boolean isC2Human;
+    private Controller() {
+        combatContol = CombatSubController.getInstance();
+        combatContol.setScanner(scanner);
+    }
+
     private Scanner scanner = new Scanner(System.in);
-    private int firstPlayer;
-    private int playerTurn = 1;
 
     public void execute() throws IOException {
         boolean playAgain = true;
         while (playAgain) {
-            firstPlayer = (int)(Math.random() * 2 + 1);
+
             greet();
             numPlayersPrompt();
             weaponSelection();
-            while (combatant1.getHealth() > 0 && combatant2.getHealth() > 0) {
-                takeTurn();
-                Console.clear();
-                updateScreen();
-            }
-            playAgain = displayVictoryScreen();
+
+            playAgain = combatContol.runCombat();
 
         }
     }
 
-    private boolean displayVictoryScreen() throws IOException {
-
-        String winner;
-        if(combatant1.getHealth() > 0){
-            winner = combatant1.getName();
-        }
-        else{
-            winner = combatant2.getName();
-        }
-
-        victory();
-        if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0){
-            System.out.println("*********************************************************");
-            System.out.println("   Congratulations " + winner + "! You won!    ");
-            System.out.println("*********************************************************");
-        }
-        if (combatant1.getHealth() < 0 || combatant2.getHealth() < 0){
-            System.out.println("************************************************************************");
-            System.out.println("   Congratulations " + winner + "! You decimated your opponent!    ");
-            System.out.println("************************************************************************");
-        }
 
 
-        System.out.print("Play again? [y/n]");
-        return ("y".equalsIgnoreCase(scanner.next()));
-    }
 
-    private void updateScreen() {
-        System.out.println(combatant1.getName() + " Health: " + combatant1.getHealth());
-        System.out.println(combatant2.getName() + " Health: " + combatant2.getHealth());
-    }
-
-    private void takeTurn() {
-        if (playerTurn == firstPlayer) {
-            Attack[] attacks = combatant1.getAttacks();
-            if (isC1Human) {
-                System.out.println(combatant1.getName() + " turn");
-                movePrompt(combatant1, combatant2, attacks);
-            } else {
-                int attackIndex = (int) (Math.random() * attacks.length);
-                System.out.println(combatant1.attack(attacks[attackIndex], combatant2));
-            }
-        } else {
-            Attack[] attacks = combatant2.getAttacks();
-            if (isC2Human) {
-                System.out.println(combatant2.getName() + " turn");
-                movePrompt(combatant2, combatant1, attacks);
-            } else {
-                int attackIndex = (int) (Math.random() * attacks.length);
-                System.out.println(combatant2.attack(attacks[attackIndex], combatant1));
-            }
-        }
-        playerTurn = (playerTurn % 2) + 1;
-    }
-
-    private void movePrompt(Fighter attacker, Fighter target, Attack[] attacks) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(selectAttack);
-        for (int i = 0; i < attacks.length; i++) {
-            stringBuilder.append(String.format(bracketRegex, i + 1));
-            stringBuilder.append(attacks[i].name().toLowerCase());
-        }
-        boolean isValid = true;
-        while (isValid) {
-            System.out.print(stringBuilder);
-            String attackInput = scanner.next();
-
-            if (attackInput.matches(oneDigitRegex) && Integer.parseInt(attackInput) <= attacks.length) {
-                System.out.println(attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target));
-                isValid = false;
-            }
-        }
-    }
 
     private void weaponSelection() {
-        combatant1 = getCombatant();
-        System.out.println(combatant1.getName() + CHOSE + combatant1.getWeaponName() + " and " + combatant1.getCharacter().getPrintName());
-        combatant2 = getCombatant();
-        System.out.println(combatant2.getName() + CHOSE + combatant2.getWeaponName()+ " and " + combatant2.getCharacter().getPrintName());
+        Fighter combatant = getCombatant();
+        combatContol.setCombatant1(combatant);
+        System.out.println(combatant.getName() + CHOSE + combatant.getWeaponName() + " and "
+                + combatant.getCharacter().getPrintName());
+        combatant = getCombatant();
+        combatContol.setCombatant2(combatant);
+        System.out.println(combatant.getName() + CHOSE + combatant.getWeaponName() + " and "
+                + combatant.getCharacter().getPrintName());
     }
 
     private Fighter getCombatant() {
@@ -176,18 +111,18 @@ public class Controller {
                 switch (numPlayers) {
                     case 0:
                         System.out.println(zeroPlayerAnnouncement);
-                        isC1Human = false;
-                        isC2Human = false;
+                        combatContol.setC1Human(false);
+                        combatContol.setC2Human(false);
                         break;
                     case 1:
                         System.out.println(onePlayerAnnouncement);
-                        isC1Human = true;
-                        isC2Human = false;
+                        combatContol.setC1Human(true);
+                        combatContol.setC2Human(false);
                         break;
                     case 2:
                         System.out.println(twoPlayerAnnouncement);
-                        isC1Human = true;
-                        isC2Human = true;
+                        combatContol.setC1Human(true);
+                        combatContol.setC2Human(true);
                         break;
                 }
             }
@@ -199,8 +134,12 @@ public class Controller {
                 .forEach(System.out::println);
     }
 
-    private void victory() throws IOException{
-        Files.lines(Path.of(VICTORY_FILE_PATH))
-                .forEach(System.out::println);
+    void victory() {
+        try {
+            Files.lines(Path.of(VICTORY_FILE_PATH))
+                    .forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

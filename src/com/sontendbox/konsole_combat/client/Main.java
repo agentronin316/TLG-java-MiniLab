@@ -6,7 +6,7 @@ import java.io.IOException;
 
 class Main {
     public static void main(String[] args) throws IOException {
-        Controller controller = new Controller();
+        Controller controller = Controller.getInstance();
         controller.execute();
     }
 
