@@ -9,4 +9,7 @@
 |* BALANCED attacks are the best of both worlds, decent accuracy and small bump to damage.  |
 |* ACCURATE attacks the most likely to hit but come at the cost of reduced damage.          |
 |* HEAVY attacks offer the most damage boost to an attack but come at the cost of accuracy. |
+|*                                                                                          |
+|* TIP: If bow is selected, the player is able to launch an attack before the normal combat |
+|* sequence.                                                                                |
 |*******************************************************************************************|
