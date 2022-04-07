@@ -181,64 +181,39 @@ class CombatSubController {
         }
 
         controller.show(VICTORY_FILE_PATH);
-        if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0) {
-            if (combatant1.getName().equalsIgnoreCase("jose") || combatant2.getName().equalsIgnoreCase("jose")) {
-                if (winner.equalsIgnoreCase("jose")) {
-                    System.out.println(centerText("", winnerBannerWidth, '*'));
-                    String victoryText = winner + " only won cause it's rigged!!!";
-                    victoryText = centerText(victoryText, winnerBannerWidth, '*');
-                    System.out.println(victoryText);
-                    System.out.println(centerText("", winnerBannerWidth, '*'));
-                } else {
-                    System.out.println(centerText("", winnerBannerWidth, '*'));
-                    String victoryText = winner + " reminds Jose this isn't Duck Race and he can't win them all!";
-                    victoryText = centerText(victoryText, winnerBannerWidth, '*');
-                    System.out.println(victoryText);
-                    System.out.println(centerText("", winnerBannerWidth, '*'));
-                }
 
-            } else {
+        if(combatant1.getName().equalsIgnoreCase("jose") || combatant2.getName().equalsIgnoreCase("jose")){
+            if(winner.equalsIgnoreCase("jose")){
+                joseWin();
+            }
+            else{
+                joseLose();
+            }
+        }
+
+        else{
+            if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0) {
                 System.out.println(centerText("", winnerBannerWidth, '*'));
                 String victoryText = "Congratulations " + winner + "! You won!";
                 victoryText = centerText(victoryText, winnerBannerWidth, '*');
                 System.out.println(victoryText);
                 System.out.println(centerText("", winnerBannerWidth, '*'));
             }
-        }
 
-        if (combatant1.getHealth() < 0 || combatant2.getHealth() < 0) {
-            if (winner.equalsIgnoreCase("jose")) {
-                if (winner.equalsIgnoreCase("jose")) {
-                        System.out.println(centerText("", winnerBannerWidth, '*'));
-                        String victoryText = winner + " only won because it's rigged!!!";
-                        victoryText = centerText(victoryText, winnerBannerWidth, '*');
-                        System.out.println(victoryText);
-                        System.out.println(centerText("", winnerBannerWidth, '*'));
-
-                    } else {
-                        System.out.println(centerText("", winnerBannerWidth, '*'));
-                        String victoryText = " " + winner + " reminds Jose this isn't Duck Race and he can't win them all!";
-                        victoryText = centerText(victoryText, winnerBannerWidth, '*');
-                        System.out.println(victoryText);
-                        System.out.println(centerText("", winnerBannerWidth, '*'));
-                    }
-
-                }
-            }
-            else {
+            if (combatant1.getHealth() < 0 || combatant2.getHealth() < 0) {
                 System.out.println(centerText("", winnerBannerWidth, '*'));
                 String victoryText = "Congratulations " + winner + "! You decimated your opponent!";
                 victoryText = centerText(victoryText, winnerBannerWidth, '*');
                 System.out.println(victoryText);
                 System.out.println(centerText("", winnerBannerWidth, '*'));
             }
+        }
 
 
 
+            System.out.print("Play again? [y/n]");
+            return ("y".equalsIgnoreCase(scanner.next()));
 
-
-        System.out.print("Play again? [y/n]");
-        return ("y".equalsIgnoreCase(scanner.next()));
     }
 
 
@@ -258,6 +233,21 @@ class CombatSubController {
             builder.append(String.valueOf(filler).repeat(rightPad));
             return builder.toString();
         }
+    }
+    void joseWin(){
+        System.out.println(centerText("", winnerBannerWidth, '*'));
+        String victoryText = "Jose only won because it's rigged!!!";
+        victoryText = centerText(victoryText, winnerBannerWidth, '*');
+        System.out.println(victoryText);
+        System.out.println(centerText("", winnerBannerWidth, '*'));
+    }
+
+    void joseLose(){
+        System.out.println(centerText("", winnerBannerWidth, '*'));
+        String victoryText = "Sorry Jose, this isn't Duck Race, you can't win them all!";
+        victoryText = centerText(victoryText, winnerBannerWidth, '*');
+        System.out.println(victoryText);
+        System.out.println(centerText("", winnerBannerWidth, '*'));
     }
 
 
