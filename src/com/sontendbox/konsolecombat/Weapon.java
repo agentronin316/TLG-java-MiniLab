@@ -3,15 +3,11 @@ package com.sontendbox.konsolecombat;
 import java.util.Arrays;
 
 enum Weapon {
-
-    
-
     FIST("punches", 8, "fist", Attack.BALANCED),
     BOW("shoots", 8, "bow", Attack.ACCURATE),
     SWORD("slashes", 8, "sword", Attack.ACCURATE, Attack.BALANCED),
     MACE("bashes", 8, "mace", Attack.BALANCED, Attack.HEAVY),
     BATTLEAXE("hacks", 8, "battleaxe", Attack.HEAVY);
-
 
     private final String verb;
     private final int baseDamage;
@@ -37,6 +33,10 @@ enum Weapon {
         return verb;
     }
 
+    int damageCalculation(Attack attack) {
+        return baseDamage + attack.getDamageMod();
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + ": "
@@ -44,9 +44,5 @@ enum Weapon {
                 +", baseDamage=" + baseDamage
                 + ", printName='" + getPrintName()
                 +", attacks=" + Arrays.toString(attacks);
-    }
-
-    int damageCalculation(Attack attack) {
-        return baseDamage + attack.getDamageMod();
     }
 }
