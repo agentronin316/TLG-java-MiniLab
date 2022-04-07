@@ -27,18 +27,19 @@ class Fighter {
         return weapon.getAttacks();
     }
 
+    // throws IllegalArgumentException if the weapon does not allow the attack that is passed
     String attack(Attack attack, Fighter opponent) throws IllegalArgumentException{
         String toReturn;
         if(Arrays.stream(weapon.getAttacks()).noneMatch(attack1 -> attack1 == attack)){
             throw new IllegalArgumentException(String.format(exceptionMessageFormat, weapon.name(), attack.name()));
         }
-        int hit = (int)(Math.random() * 100);
-        if (hit < getAccuracy(attack)){
-            int damage = getDamage(attack);
-            opponent.takeDamage(damage);
+        int hit = (int)(Math.random() * 100); //check hit percentage
+        if (hit < getAccuracy(attack)){ //if it hits
+            int damage = getDamage(attack); //calculate damage
+            opponent.takeDamage(damage);    //do the damage and create a string for player feedback
             toReturn = String.format(hitFormat, getName(), weapon.getVerb(), opponent.getName(), damage);
         } else {
-            toReturn = name + missMessage;
+            toReturn = name + missMessage; //if it misses, tell the player
         }
         return toReturn;
     }

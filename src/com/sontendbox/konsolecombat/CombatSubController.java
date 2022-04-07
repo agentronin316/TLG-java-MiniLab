@@ -5,14 +5,21 @@ import com.apps.util.Console;
 import java.util.Scanner;
 
 class CombatSubController {
+    //file path constants
+    private static final String VICTORY_FILE_PATH = "resources/victory.txt";
+
+    //other constants
     private static final String selectAttack = "Select attack: ";
     private static final String oneDigitRegex = "\\d{1}";
     private static final String bracketFormatString = "[%s]";
-    private static final String VICTORY_FILE_PATH = "resources/victory.txt";
     private static final String notAnEasterEgg = "Jose";
     private static final int winnerBannerWidth = 75;
 
+
     private static Controller controller;
+
+            //#### Singleton stuff
+
     //this will always be a reference to the only instance of this class to exist
     private static CombatSubController instance;
 
@@ -30,7 +37,9 @@ class CombatSubController {
     //private ctor
     private CombatSubController() {
     }
+            //#### end Singleton stuff
 
+    //fields
     private Fighter combatant1;
     private Fighter combatant2;
     private boolean isC1Human;
@@ -39,6 +48,7 @@ class CombatSubController {
     private int playerTurn = 1;
     private Scanner scanner;
 
+    //accessor methods
     public static void setController(Controller controller) {
         CombatSubController.controller = controller;
     }
@@ -65,13 +75,13 @@ class CombatSubController {
 
     //business methods
 
-    public boolean runCombat() {
-        preemptiveStrike();
-        firstPlayer = (int) (Math.random() * 2 + 1);
+    public boolean runCombat() { //Main combat loop, returns if the player wants to play again
+        preemptiveStrike(); //extra combat round for the bow
+        firstPlayer = (int) (Math.random() * 2 + 1); //pick a first player at random
         while (combatant1.getHealth() > 0 && combatant2.getHealth() > 0) {
             updateScreen();
             takeTurn();
-            try {
+            try { //wait one second before clearing the screen
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -83,23 +93,23 @@ class CombatSubController {
 
     private void preemptiveStrike() {
         firstPlayer = 1;
-        if (combatant1.getWeaponName().equals("bow")) {
+        if (combatant1.getWeaponName().equals("bow")) { //if player one has a bow they get a turn
             System.out.println(combatant1.getName() + " fires a arrow while " +
                     combatant2.getName() + " is approaching!");
             takeTurn();
             updateScreen();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1000); //wait one second before clearing screen
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             Console.clear();
-            playerTurn = 1;
+            playerTurn = 1; //reset player turn for regular combat
         }
-        if (combatant2.getWeaponName().equals("bow")) {
+        if (combatant2.getWeaponName().equals("bow")) {  //if player two has a bow....
             System.out.println(combatant2.getName() + " fires a arrow while " +
                     combatant1.getName() + " is approaching!");
-            playerTurn = 2;
+            playerTurn = 2; //set turn order so player two gets to act
             takeTurn();
             updateScreen();
             try {
@@ -117,7 +127,7 @@ class CombatSubController {
     }
 
     private void takeTurn() {
-        if (playerTurn == firstPlayer) {
+        if (playerTurn == firstPlayer) { //if it is player one's turn...
             Attack[] attacks = combatant1.getAttacks(); //get attack array for combatant1
             controller.displayPlayer(combatant1.getWeaponName()); //display weapon graphics
             if (isC1Human) {
@@ -126,8 +136,7 @@ class CombatSubController {
                 int attackIndex = (int) (Math.random() * attacks.length); //pick a random valid attack
                 System.out.println(combatant1.attack(attacks[attackIndex], combatant2)); //do attack
             }
-
-        } else {
+        } else { //otherwise, it is player two's turn
             Attack[] attacks = combatant2.getAttacks(); //get attack array for combatant2
             controller.displayPlayer(combatant2.getWeaponName()); //display weapon graphics
             if (isC2Human) {
@@ -138,20 +147,21 @@ class CombatSubController {
             }
 
         }
-        playerTurn = (playerTurn % 2) + 1;
+        playerTurn = (playerTurn % 2) + 1; //playerTurn will alternate between 1 and 2
     }
 
+    // prompt the player for their attack choice
     private void movePrompt(Fighter attacker, Fighter target, Attack[] attacks) {
-        System.out.println(attacker.getName() + "'s turn");
-        StringBuilder stringBuilder = buildAttacksString(attacker, attacks);
-        boolean isValid = true;
-        while (isValid) {
-            System.out.print(stringBuilder);
-            String attackInput = scanner.next();
+        System.out.println(attacker.getName() + "'s turn"); // announce who's turn it is
+        StringBuilder stringBuilder = buildAttacksString(attacker, attacks); //get the attack string to display
+        boolean isInvalid = true;
+        while (isInvalid) {
+            System.out.print(stringBuilder); //display attack string
+            String attackInput = scanner.next(); //get user input
 
             if (attackInput.matches(oneDigitRegex) && Integer.parseInt(attackInput) <= attacks.length) {
                 System.out.println(attacker.attack(attacks[Integer.parseInt(attackInput) - 1], target));
-                isValid = false;
+                isInvalid = false; //if it is good, do the attack and end the loop
             }
         }
     }
@@ -160,9 +170,9 @@ class CombatSubController {
     private StringBuilder buildAttacksString(Fighter attacker, Attack[] attacks) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(selectAttack);
-        stringBuilder.append("\n   ");
+        stringBuilder.append("\n   "); //format the string as a table
         stringBuilder.append(String.format("| %10S | %9S | %5S\n", "Attack", "Accuracy", "Damage"));
-        for (int i = 0; i < attacks.length; i++) {
+        for (int i = 0; i < attacks.length; i++) { //add a row for each attack
             stringBuilder.append(String.format(bracketFormatString, i + 1));
             stringBuilder.append(String.format("| %10S | %9S | %5S", attacks[i].name(),
                     attacker.getAccuracy(attacks[i]) + "%",
@@ -214,14 +224,14 @@ class CombatSubController {
 
 
 
-            System.out.print("Play again? [y/n]");
-            return ("y".equalsIgnoreCase(scanner.next()));
+            System.out.print("Play again? [y/n]"); //ask the player if they wish to play again
+            return ("y".equalsIgnoreCase(scanner.next())); //return true if they enter y, false for anything else
 
     }
 
 
     String centerText(String text, int width) {
-        return centerText(text, width, ' ');
+        return centerText(text, width, ' '); //delegate to the 3 parameter version with space for filler
     }
 
     String centerText(String text, int width, char filler) {
