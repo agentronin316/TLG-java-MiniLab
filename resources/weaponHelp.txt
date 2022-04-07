@@ -1,0 +1,12 @@
+                               Weapon Selection Guide
+|*******************************************************************************************|
+|* Weapons are how fighters deal damage to one another.                                     |
+|* Below are the weapons available for players to use.                                      |
+|* As you can see, each weapon has an attack or attacks that are unique to that weapon.     |
+|* Attacks have two factors that relate to damage; Accuracy and Damage modifiers.           |
+|* The more accurate the attack, the more likely you are to land the attack.                |
+|* Damage modifiers add an extra punch based on which attack type is used.                  |
+|* BALANCED attacks are the best of both worlds, decent accuracy and small bump to damage.  |
+|* ACCURATE attacks the most likely to hit but come at the cost of reduced damage.          |
+|* HEAVY attacks offer the most damage boost to an attack but come at the cost of accuracy. |
+|*******************************************************************************************|

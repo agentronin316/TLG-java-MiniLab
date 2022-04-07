@@ -7,7 +7,7 @@
 #     Remove this -classpath "lib/*" if you're not using any, which results in the following:
 #     javac -d classes src/com/games/blackjack/client/*.java src/com/games/blackjack/controller/*.java src/com/games/blackjack/domain/*.java
 
-javac -d classes -classpath "lib/app-utils-1.1.jar" src/com/sontendbox/konsole_combat/*.java src/com/sontendbox/konsole_combat/client/*.java
+javac -d classes -classpath "lib/app-utils-1.1.jar" src/com/sontendbox/konsolecombat/*.java src/com/sontendbox/konsolecombat/client/*.java
 
 
 #     Build the application JAR.

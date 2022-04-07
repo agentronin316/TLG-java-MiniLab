@@ -1,9 +1,9 @@
-package com.sontendbox.konsole_combat;
+package com.sontendbox.konsolecombat;
 
 enum Character {
     DEFAULT(0, 0,"Default"),
     PRECISE(5, -1,"Precise"),
-    WILD(-10, 3,"Wild");
+    WILD(-15, 2,"Wild");
 
     private final int accuracyMod;
     private final int damageMod;
