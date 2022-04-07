@@ -98,26 +98,28 @@ public class Controller {
         System.out.println();
         System.out.print(weaponSelectPrompt2);
         while (true) {
-            String input = scanner.next();
+            String input = scanner.next(); //get weapon selection
             for (Weapon weapon : Weapon.values()) {
                 if (input.equalsIgnoreCase(weapon.getPrintName())) {
-                    Console.clear();
-                    show(CHARACTER_TIP_FILE_PATH);
+                    Console.clear(); //clear console
+                    show(CHARACTER_TIP_FILE_PATH); //show character info
                     System.out.println();
                     System.out.println(selectCharacter);
                     for (Character character : characters) {
-                        System.out.printf("%s, Damage mod: %s, Accuracy mod: %s\n",
-                                character.getPrintName(), character.getDamageMod(), character.getAccuracyMod() + "%");
+                        System.out.printf("%s, Damage mod: %s, Accuracy mod: %s\n", character.getPrintName(),
+                                character.getDamageMod(), character.getAccuracyMod() + "%");
                     }
                     System.out.println();
                     System.out.print(selectCharacter2);
-                    String charSelection = scanner.next();
-                    Console.clear();
-                    for (Character character : Character.values()) {
-                        if (charSelection.equalsIgnoreCase(character.getPrintName())) {
-                            return new Fighter(weapon, name, character);
-                        }
+                    while (true) {
+                        String charSelection = scanner.next(); //get character selection
+                        for (Character character : Character.values()) {
+                            if (charSelection.equalsIgnoreCase(character.getPrintName())) {
+                                Console.clear();
+                                return new Fighter(weapon, name, character);
+                            }
 
+                        }
                     }
                 }
             }

@@ -69,8 +69,8 @@ class CombatSubController {
         preemptiveStrike();
         firstPlayer = (int) (Math.random() * 2 + 1);
         while (combatant1.getHealth() > 0 && combatant2.getHealth() > 0) {
-            takeTurn();
             updateScreen();
+            takeTurn();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -118,21 +118,19 @@ class CombatSubController {
 
     private void takeTurn() {
         if (playerTurn == firstPlayer) {
-            Attack[] attacks = combatant1.getAttacks();
-            controller.displayPlayer(combatant1.getWeaponName());
+            Attack[] attacks = combatant1.getAttacks(); //get attack array for combatant1
+            controller.displayPlayer(combatant1.getWeaponName()); //display weapon graphics
             if (isC1Human) {
-                System.out.println(combatant1.getName() + " turn");
-                movePrompt(combatant1, combatant2, attacks);
+                movePrompt(combatant1, combatant2, attacks); //player turn interaction
             } else {
-                int attackIndex = (int) (Math.random() * attacks.length);
-                System.out.println(combatant1.attack(attacks[attackIndex], combatant2));
+                int attackIndex = (int) (Math.random() * attacks.length); //pick a random valid attack
+                System.out.println(combatant1.attack(attacks[attackIndex], combatant2)); //do attack
             }
 
         } else {
-            Attack[] attacks = combatant2.getAttacks();
-            controller.displayPlayer(combatant2.getWeaponName());
+            Attack[] attacks = combatant2.getAttacks(); //get attack array for combatant2
+            controller.displayPlayer(combatant2.getWeaponName()); //display weapon graphics
             if (isC2Human) {
-                System.out.println(combatant2.getName() + " turn");
                 movePrompt(combatant2, combatant1, attacks);
             } else {
                 int attackIndex = (int) (Math.random() * attacks.length);
@@ -144,6 +142,7 @@ class CombatSubController {
     }
 
     private void movePrompt(Fighter attacker, Fighter target, Attack[] attacks) {
+        System.out.println(attacker.getName() + "'s turn");
         StringBuilder stringBuilder = buildAttacksString(attacker, attacks);
         boolean isValid = true;
         while (isValid) {
@@ -157,6 +156,7 @@ class CombatSubController {
         }
     }
 
+    // make a single string that will display all the information for attack selection in combat
     private StringBuilder buildAttacksString(Fighter attacker, Attack[] attacks) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(selectAttack);
@@ -175,6 +175,7 @@ class CombatSubController {
     private boolean displayVictoryScreen() {
 
         String winner;
+        //determine who won
         if (combatant1.getHealth() > 0) {
             winner = combatant1.getName();
         } else {
@@ -183,16 +184,17 @@ class CombatSubController {
 
         controller.show(VICTORY_FILE_PATH);
 
-        if(combatant1.getName().equalsIgnoreCase("jose") || combatant2.getName().equalsIgnoreCase("jose")){
-            if(winner.equalsIgnoreCase("jose")){
-                joseWin();
+        //check for easter egg trigger
+        if(combatant1.getName().equalsIgnoreCase(notAnEasterEgg)
+                || combatant2.getName().equalsIgnoreCase(notAnEasterEgg)){
+            if(winner.equalsIgnoreCase(notAnEasterEgg)){
+                notAnEasterEggVictory();
             }
             else{
-                joseLose();
+                notAnEasterEggDefeat();
             }
         }
-
-        else{
+        else{ //otherwise, display ending graphics normally
             if (combatant1.getHealth() == 0 || combatant2.getHealth() == 0) {
                 System.out.println(centerText("", winnerBannerWidth, '*'));
                 String victoryText = "Congratulations " + winner + "! You won!";
@@ -227,15 +229,17 @@ class CombatSubController {
             return text;
         } else {
             StringBuilder builder = new StringBuilder();
-            int leftPad = (width - text.length()) / 2;
-            builder.append(String.valueOf(filler).repeat(leftPad));
-            builder.append(text);
+            int leftPad = (width - text.length()) / 2; //determine amount of padding needed on the left
+            builder.append(String.valueOf(filler).repeat(leftPad)); //fill left padding with filler character
+            builder.append(text); //add the text in the middle
             int rightPad = width - builder.length();
-            builder.append(String.valueOf(filler).repeat(rightPad));
+            builder.append(String.valueOf(filler).repeat(rightPad)); //fill the rest of the line with filler character
             return builder.toString();
         }
     }
-    void joseWin(){
+
+
+    private void notAnEasterEggVictory(){
         System.out.println(centerText("", winnerBannerWidth, '*'));
         String victoryText = String.format("%s only won because it's rigged!", notAnEasterEgg);
         victoryText = centerText(victoryText, winnerBannerWidth, '*');
@@ -243,7 +247,7 @@ class CombatSubController {
         System.out.println(centerText("", winnerBannerWidth, '*'));
     }
 
-    void joseLose(){
+    private void notAnEasterEggDefeat(){
         System.out.println(centerText("", winnerBannerWidth, '*'));
         String victoryText = String.format("Sorry %s, this isn't Duck Race! You can't win them all!", notAnEasterEgg);
         victoryText = centerText(victoryText, winnerBannerWidth, '*');
