@@ -9,6 +9,7 @@ class CombatSubController {
     private static final String oneDigitRegex = "\\d{1}";
     private static final String bracketFormatString = "[%s]";
     private static final String VICTORY_FILE_PATH = "resources/victory.txt";
+    private static final String notAnEasterEgg = "Jose";
     private static final int winnerBannerWidth = 75;
 
     private static Controller controller;
@@ -236,7 +237,7 @@ class CombatSubController {
     }
     void joseWin(){
         System.out.println(centerText("", winnerBannerWidth, '*'));
-        String victoryText = "Jose only won because it's rigged!!!";
+        String victoryText = String.format("%s only won because it's rigged!", notAnEasterEgg);
         victoryText = centerText(victoryText, winnerBannerWidth, '*');
         System.out.println(victoryText);
         System.out.println(centerText("", winnerBannerWidth, '*'));
@@ -244,7 +245,7 @@ class CombatSubController {
 
     void joseLose(){
         System.out.println(centerText("", winnerBannerWidth, '*'));
-        String victoryText = "Sorry Jose, this isn't Duck Race, you can't win them all!";
+        String victoryText = String.format("Sorry %s, this isn't Duck Race! You can't win them all!", notAnEasterEgg);
         victoryText = centerText(victoryText, winnerBannerWidth, '*');
         System.out.println(victoryText);
         System.out.println(centerText("", winnerBannerWidth, '*'));
