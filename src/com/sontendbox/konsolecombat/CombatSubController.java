@@ -84,7 +84,7 @@ class CombatSubController {
     private void preemptiveStrike() {
         firstPlayer = 1;
         if (combatant1.getWeaponName().equals("bow")) {
-            System.out.println(combatant1.getName() + "fires a arrow while " +
+            System.out.println(combatant1.getName() + " fires a arrow while " +
                     combatant2.getName() + " is approaching!");
             takeTurn();
             updateScreen();
@@ -97,7 +97,7 @@ class CombatSubController {
             playerTurn = 1;
         }
         if (combatant2.getWeaponName().equals("bow")) {
-            System.out.println(combatant2.getName() + "fires a arrow while " +
+            System.out.println(combatant2.getName() + " fires a arrow while " +
                     combatant1.getName() + " is approaching!");
             playerTurn = 2;
             takeTurn();
