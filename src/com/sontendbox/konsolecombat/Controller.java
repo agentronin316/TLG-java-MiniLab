@@ -29,11 +29,10 @@ public class Controller {
     private static final String onePlayerAnnouncement = "Battle is between 1 human controlled fighter and " +
             "1 computer controlled fighter";
     private static final String zeroPlayerAnnouncement = "Battle is between 2 computer controlled fighters";
-    private static final String namePrompt = "Enter a name for player";
+    private static final String namePrompt = "Enter a name for player: ";
     private static Controller instance;
     private static CombatSubController combatContol;
 
-    private int playerNumber = 1;
 
     public static Controller getInstance() {
         if (instance == null) {
@@ -79,12 +78,12 @@ public class Controller {
     }
 
     private Fighter getCombatant() {
-        System.out.printf("%s %s: \n",namePrompt, playerNumber);
-        playerNumber += 1;
+        System.out.print(namePrompt);
         String name = scanner.next();
         Console.clear();
         StringBuilder builder = new StringBuilder();
         show(WEAPON_TIP_FILE_PATH);
+        System.out.println();
         builder.append(weaponSelectPrompt);
         Weapon[] weapons = Weapon.values();
         Character[] characters = Character.values();
@@ -95,7 +94,8 @@ public class Controller {
         }
         builder.append(weapons[weapons.length - 1].getPrintName()).append(Arrays.toString(weapons[weapons.length - 1].getAttacks()));
         System.out.print(builder);
-        System.out.print("\n");
+        System.out.println();
+        System.out.println();
         System.out.print(weaponSelectPrompt2);
         while (true) {
             String input = scanner.next();
@@ -103,11 +103,13 @@ public class Controller {
                 if (input.equalsIgnoreCase(weapon.getPrintName())) {
                     Console.clear();
                     show(CHARACTER_TIP_FILE_PATH);
+                    System.out.println();
                     System.out.println(selectCharacter);
                     for (Character character : characters) {
                         System.out.printf("%s, Damage mod: %s, Accuracy mod: %s\n",
                                 character.getPrintName(), character.getDamageMod(), character.getAccuracyMod() + "%");
                     }
+                    System.out.println();
                     System.out.print(selectCharacter2);
                     String charSelection = scanner.next();
                     Console.clear();
