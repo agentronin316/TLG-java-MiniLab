@@ -1,5 +1,5 @@
                                Weapon Selection Guide
-|*******************************************************************************************|
+|-------------------------------------------------------------------------------------------|
 |* Weapons are how fighters deal damage to one another.                                     |
 |* Below are the weapons available for players to use.                                      |
 |* As you can see, each weapon has an attack or attacks that are unique to that weapon.     |
@@ -12,4 +12,4 @@
 |*                                                                                          |
 |* TIP: If bow is selected, the player is able to launch an attack before the normal combat |
 |* sequence.                                                                                |
-|*******************************************************************************************|
+|-------------------------------------------------------------------------------------------|

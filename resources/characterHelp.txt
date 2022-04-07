@@ -1,5 +1,5 @@
                                         Character Selection Guide
-|***************************************************************************************************************|
+|---------------------------------------------------------------------------------------------------------------|
 |* Characters in Konsole Combat™ allow players to further customize their play styles.                          |
 |* Like attack types mentioned earlier, different characters effect damage and accuracy stats.                  |
 |* The DEFAULT character is the base experience. No change to accuracy or damage here.                          |
@@ -7,4 +7,4 @@
 |* The WILD character is all about damage. Using this character gives a boost to damage but accuracy is reduced.|
 |*                                                                                                              |
 |* TIP: Characters can be used to offset the weaknesses of weapons or amplify their advantages.                 |
-|***************************************************************************************************************|
+|---------------------------------------------------------------------------------------------------------------|
